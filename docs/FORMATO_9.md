@@ -6,9 +6,8 @@
 | | Bajo esfuerzo | Alto esfuerzo |
 |---|---|---|
 | **Alto impacto** | **Hazlo primero:** Chatbot · Automatización | **Planifícalo:** Aviso a los clientes |
-| **Bajo impacto** | **Mejoras rápidas:** Confirmación de citas* · Tabla con disponibilidad | **Descártalo:** Hacer una aplicación · Llamadas (IA) |
+| **Bajo impacto** | **Mejoras rápidas:** Confirmación de citas · Tabla con disponibilidad (página simple donde el dueño marca días ocupados y el cliente los ve) | **Descártalo:** Hacer una aplicación · Llamadas (IA) |
 
-*Transcrito de la foto; revisar la letra.
 
 ## Tres lentes
 | Idea finalista | Deseable | Factible | Viable | ¿Pasa? |
@@ -17,7 +16,7 @@
 | Chatbot | Sí | Sí | Sí | Sí |
 
 ## Notas de la hoja
-- Precios anotados: $8,99 básico (pequeñas, 8–10) · $13,99 premium (hasta 35, grandes) · $24,99. Versión actual: $10 / $15 / $25.
+- Precios anotados en clase: $8,99 · $13,99 · $24,99. Precios finales: Básico $29 · Pro $59 · Empresa $149 (+$20 por sede extra), calculados como 10–20 % del valor que recibe la clínica.
 - Apoyo actual ≈ $800 (persona que atiende WhatsApp).
 - Hay competencia, pero no enfocada en clínicas.
 - Somos únicos por 2 factores: libertad en el manejo de tus productos y estadísticas de tu negocio.

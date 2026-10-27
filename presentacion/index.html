@@ -4,54 +4,80 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AgendaVet · Defensa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clicker+Script&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f8f7; --ink:#14302b; --muted:#5b6f6a; --brand:#0f766e; --brand2:#14b8a6;
-  --soft:#e3f4f1; --warm:#f4ede3; --warmInk:#8a5a12; --line:#d9e3e0; --card:#ffffff; --dark:#0d3b36;
-  --pend:#fff4d6; --pendInk:#7a5600;
+  --night:#1a110b; --night2:#2b1a0f; --brown:#603809; --gold:#f9c06a; --goldDeep:#e0a54a;
+  --cream:#fff9f1; --cream2:#f6ead8; --ink:#2b1a0f; --muted:#7a6553; --line:#ead9c2; --white:#ffffff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#0b1f1c;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink)}
+html,body{height:100%;background:#0e0906;font-family:"Playfair Display",Georgia,serif;color:var(--ink)}
 .deck{height:100%;display:flex;align-items:center;justify-content:center}
-.slide{display:none;width:min(100vw,177.78vh);aspect-ratio:16/9;background:var(--bg);position:relative;overflow:hidden;
-  padding:5.2% 6.5%;font-size:min(1.9vw,3.4vh);flex-direction:column}
+.slide{display:none;width:min(100vw,177.78vh);aspect-ratio:16/9;background:var(--cream);position:relative;overflow:hidden;
+  padding:5% 7%;font-size:min(1.85vw,3.3vh);flex-direction:column}
 .slide.active{display:flex}
-.kicker{font-size:.62em;letter-spacing:.16em;text-transform:uppercase;color:var(--brand);font-weight:700;margin-bottom:.5em}
-h1{font-size:2.6em;line-height:1.05;color:var(--dark);font-weight:800}
-h2{font-size:1.75em;line-height:1.12;color:var(--dark);font-weight:800;margin-bottom:.7em}
-h3{font-size:.95em;color:var(--brand);margin-bottom:.3em}
-p,li{font-size:.82em;line-height:1.45}
-.sub{color:var(--muted);font-size:.95em;margin-top:.8em;max-width:80%}
-.foot{position:absolute;left:6.5%;bottom:3.4%;font-size:.5em;color:var(--muted)}
-.num{position:absolute;right:6.5%;bottom:3.4%;font-size:.5em;color:var(--muted)}
-.grid{display:grid;gap:.8em}
-.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:.6em;padding:.8em 1em}
-.card.teal{background:var(--soft);border-color:#bfe6df}
-.card.warm{background:var(--warm);border-color:#eadcc6}
-.card.top{border-top:.3em solid var(--brand)}
-.big{font-size:2em;font-weight:800;color:var(--brand);line-height:1}
-.band{margin-top:.9em;border-radius:.5em;padding:.7em 1em;background:#e6eeec;color:var(--dark);font-size:.82em}
-.band.dark{background:var(--dark);color:#fff}
-.pend{background:var(--pend);color:var(--pendInk);border-radius:.3em;padding:0 .3em;font-weight:600}
-table{width:100%;border-collapse:collapse;font-size:.74em}
-th{background:var(--dark);color:#fff;text-align:left;padding:.45em .7em}
-td{padding:.45em .7em;border-bottom:1px solid var(--line);background:#fff}
-tr.hl td{background:var(--soft);font-weight:600}
-.cover{background:var(--dark);color:#fff;justify-content:center}
-.cover h1{color:#fff;font-size:3.2em}.cover .kicker{color:#7fe3d6}.cover .sub{color:#cfe7e3}
-.cover::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1.6%;background:var(--brand2)}
-.quad{display:grid;grid-template-columns:auto 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:.5em;flex:1}
-.quad .lab{font-size:.6em;color:var(--muted);font-weight:700;align-self:center;text-align:center}
-.quad .card{font-size:.95em}
-.quad b.t{display:block;font-size:.8em;margin-bottom:.2em}
+
+/* tipografía */
+.script{font-family:"Clicker Script",cursive;font-weight:400}
+.kicker{font-size:.62em;letter-spacing:.18em;text-transform:uppercase;color:var(--brown);font-weight:700;margin-bottom:.4em}
+h2{font-size:1.75em;line-height:1.12;font-weight:700;margin-bottom:.65em}
+h2 .script{font-size:1.35em;color:var(--brown);line-height:.8}
+h3{font-size:.95em;color:var(--brown);margin-bottom:.3em;font-weight:700}
+p,li{font-size:.8em;line-height:1.5}
+ul{padding-left:1.1em}
+.num{position:absolute;right:7%;bottom:3.4%;font-size:.5em;color:var(--muted)}
+
+/* bloques */
+.grid{display:grid;gap:.85em}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--white);border-radius:.7em;padding:.85em 1.05em;box-shadow:0 .25em .9em rgba(96,56,9,.08);border:1px solid var(--line)}
+.card.gold{background:var(--cream2);border-color:#e9cfa6}
+.card.dark{background:var(--night2);color:var(--cream);border-color:var(--night2)}
+.card.dark h3{color:var(--gold)}
+.big{font-size:2em;font-weight:800;color:var(--brown);line-height:1}
+.pill{display:inline-block;background:var(--gold);color:var(--night);border-radius:2em;padding:.35em 1.1em;font-weight:700;font-size:.65em;box-shadow:0 .3em 1em rgba(249,192,106,.35)}
+.band{margin-top:.9em;border-radius:.6em;padding:.75em 1.1em;background:var(--cream2);font-size:.8em;border-left:.3em solid var(--gold)}
+.band.dark{background:var(--night2);color:var(--cream);border-left-color:var(--gold)}
+.pend{background:#ffe2a8;color:#6b3f00;border-radius:.3em;padding:0 .3em;font-weight:700}
+
+/* tablas */
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:.72em;border-radius:.6em;overflow:hidden;box-shadow:0 .25em .9em rgba(96,56,9,.08)}
+th{background:var(--night2);color:var(--gold);text-align:left;padding:.5em .75em;font-weight:700}
+td{padding:.45em .75em;border-bottom:1px solid var(--line);background:var(--white)}
+tr.hl td{background:#fff1d6;font-weight:700}
+
+/* oscuras */
+.dark-slide{background:radial-gradient(ellipse at 78% 55%,#5a3416 0%,#2b1a0f 38%,#140c07 100%);color:var(--cream)}
+.dark-slide h2{color:var(--cream)}
+.dark-slide .kicker{color:var(--gold)}
+.dark-slide p{color:#e9dccb}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:auto}
+.logo{font-family:"Clicker Script",cursive;font-size:1.6em;color:var(--cream)}
+.hero-sub{font-size:1.05em;color:var(--cream)}
+.hero-title{font-family:"Clicker Script",cursive;font-size:5.6em;line-height:.95;color:#fff;margin:.05em 0 .1em -.05em}
+.hero-text{max-width:52%;font-size:.85em;line-height:1.6;color:#e9dccb}
+.paws{position:absolute;right:5%;top:22%;width:38%;opacity:.9}
+
+/* matriz */
+.quad{display:grid;grid-template-columns:auto 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:.55em;flex:1}
+.quad .lab{font-size:.55em;color:var(--muted);font-weight:700;align-self:center;text-align:center;letter-spacing:.08em}
+.quad b.t{display:block;font-size:.8em;margin-bottom:.25em}
+
+/* flujo */
 .flow{display:flex;align-items:stretch;gap:.5em}
 .flow .card{flex:1;text-align:center}
-.flow .arr{align-self:center;color:var(--brand2);font-size:1.4em;font-weight:800}
-.price{font-size:1.6em;font-weight:800;color:var(--dark)}
-.price small{font-size:.45em;color:var(--muted);font-weight:600}
-ul{padding-left:1.1em}
-.nav{position:fixed;bottom:10px;right:14px;color:#9fb;font:12px sans-serif;opacity:.6}
+.flow .arr{align-self:center;color:var(--goldDeep);font-size:1.5em;font-weight:800}
+
+/* planes */
+.plan{display:flex;flex-direction:column}
+.plan.feat{background:var(--night2);color:var(--cream);transform:translateY(-.4em);border-color:var(--night2)}
+.plan.feat h3{color:var(--gold)}.plan.feat .price{color:#fff}.plan.feat .who{color:#d9c7b0}
+.price{font-size:1.75em;font-weight:800;color:var(--ink)}
+.price small{font-size:.42em;font-weight:600;opacity:.7}
+.who{color:var(--muted);font-size:.68em;margin-bottom:.45em}
+
+.nav{position:fixed;bottom:10px;left:14px;color:#c9a979;font:12px sans-serif;opacity:.55}
 @media print{
   @page{size:16in 9in;margin:0}
   html,body{background:#fff}.deck{display:block}.nav{display:none}
@@ -63,36 +89,41 @@ ul{padding-left:1.1em}
 <div class="deck">
 
 <!-- 1 PORTADA -->
-<section class="slide cover">
-  <div class="kicker">Emprendimiento Tecnológico · PUCE · Formato 9</div>
-  <h1>AgendaVet<br>La veterinaria que contesta sola</h1>
-  <p class="sub">Automatización de WhatsApp para clínicas veterinarias pequeñas y medianas de Quito: agenda citas, responde 24/7 y muestra cómo va el negocio.</p>
-  <div class="foot" style="color:#cfe7e3">Equipo: <span class="pend">Nombre 1 · Nombre 2 · Nombre 3</span> · Quito, octubre 2026 · <em>AgendaVet es nombre provisional</em></div>
+<section class="slide dark-slide">
+  <div class="topbar"><span class="logo">AgendaVet</span><span class="pill">Emprendimiento Tecnológico · PUCE</span></div>
+  <svg class="paws" viewBox="0 0 200 200" aria-hidden="true">
+    <g fill="#f9c06a" opacity=".16"><ellipse cx="60" cy="150" rx="22" ry="18"/><circle cx="38" cy="120" r="8"/><circle cx="52" cy="108" r="8"/><circle cx="70" cy="108" r="8"/><circle cx="84" cy="120" r="8"/></g>
+    <g fill="#f9c06a" opacity=".32"><ellipse cx="135" cy="95" rx="30" ry="25"/><circle cx="104" cy="54" r="11"/><circle cx="124" cy="38" r="11"/><circle cx="148" cy="38" r="11"/><circle cx="168" cy="54" r="11"/></g>
+  </svg>
+  <p class="hero-sub">Tu veterinaria atendida las 24 horas con</p>
+  <div class="hero-title">AgendaVet</div>
+  <p class="hero-text">Automatización de WhatsApp para clínicas veterinarias pequeñas y medianas de Quito: responde, agenda citas y te muestra cómo va tu negocio.</p>
+  <p style="margin-top:1.2em;font-size:.6em;color:#c9b59c">Equipo: <span class="pend">Nombre 1 · Nombre 2 · Nombre 3</span> · Quito, octubre 2026</p>
 </section>
 
 <!-- 2 PROBLEMA -->
 <section class="slide">
   <div class="kicker">Empatizar · El problema</div>
-  <h2>Una persona pagada solo para contestar WhatsApp</h2>
+  <h2>Una persona pagada <span class="script">solo</span> para contestar WhatsApp</h2>
   <div class="grid g3">
-    <div class="card top"><h3>Lo que pasa hoy</h3><p>Las veterinarias pequeñas y medianas tienen a alguien dedicado a responder WhatsApp: precios, horarios, citas, «¿ya está listo mi perrito?».</p></div>
-    <div class="card top"><h3>Lo que cuesta</h3><p>Ese apoyo cuesta cerca de <b>$800 al mes</b>, y fuera de horario nadie contesta: el cliente escribe a otra veterinaria.</p></div>
-    <div class="card top"><h3>Lo que no ven</h3><p>Nadie mide qué servicios se piden más, a qué hora escriben ni cuántas citas se pierden.</p></div>
+    <div class="card"><h3>Lo que pasa hoy</h3><p>Las veterinarias pequeñas y medianas tienen a alguien dedicado a responder WhatsApp: precios, horarios, citas, «¿ya está listo mi perrito?».</p></div>
+    <div class="card"><h3>Lo que cuesta</h3><p>Ese apoyo cuesta cerca de <b>$800 al mes</b>, y fuera de horario nadie contesta: el cliente escribe a otra veterinaria.</p></div>
+    <div class="card"><h3>Lo que no ven</h3><p>Nadie mide qué servicios se piden más, a qué hora escriben ni cuántas citas se pierden.</p></div>
   </div>
-  <div class="band"><b>Evidencia de campo:</b> <span class="pend">N veterinarias entrevistadas · cita textual de un dueño · horas/semana en WhatsApp</span> (completa el equipo, ver docs/TAREAS_EQUIPO.md)</div>
+  <div class="band"><b>Lo que vimos en campo:</b> <span class="pend">N veterinarias visitadas · __ mensajes al día · «frase textual de un dueño»</span></div>
   <div class="num">2</div>
 </section>
 
-<!-- 3 HMW -->
+<!-- 3 DEFINIR -->
 <section class="slide">
   <div class="kicker">Definir · Formatos 4 y 5</div>
-  <h2>El problema en tres frases</h2>
+  <h2>El problema en <span class="script">tres frases</span></h2>
   <table>
     <tr><th style="width:24%">Formato</th><th>AgendaVet</th></tr>
     <tr><td><b>Insight</b></td><td>El dueño de la mascota no quiere llamar ni esperar: quiere resolver por WhatsApp, a cualquier hora, en un minuto.</td></tr>
     <tr><td><b>Trabajo por hacer</b></td><td>Cuando mi mascota necesita atención, quiero saber precio y horario y reservar al instante, para no perder el día.</td></tr>
     <tr><td><b>POV</b></td><td>Las veterinarias pequeñas de Quito necesitan atender WhatsApp todo el día sin pagar a una persona solo para eso.</td></tr>
-    <tr class="hl"><td><b>¿Cómo podríamos…?</b></td><td>¿Cómo podríamos hacer que cada cliente agende su cita a cualquier hora, sin que nadie de la clínica tenga que contestar?</td></tr>
+    <tr class="hl"><td>¿Cómo podríamos…?</td><td>¿Cómo podríamos hacer que cada cliente agende su cita a cualquier hora, sin que nadie de la clínica tenga que contestar?</td></tr>
   </table>
   <div class="num">3</div>
 </section>
@@ -100,15 +131,15 @@ ul{padding-left:1.1em}
 <!-- 4 MATRIZ -->
 <section class="slide">
   <div class="kicker">Idear · Formato 9 · Matriz impacto-esfuerzo</div>
-  <h2 style="margin-bottom:.4em">Dos ideas pasaron a «hazlo primero»</h2>
+  <h2 style="margin-bottom:.4em">Dos ideas pasaron a <span class="script">hazlo primero</span></h2>
   <div class="quad">
     <div></div><div class="lab">BAJO ESFUERZO</div><div class="lab">ALTO ESFUERZO</div>
     <div class="lab">ALTO<br>IMPACTO</div>
-    <div class="card teal" style="border:2px solid var(--brand)"><b class="t" style="color:var(--brand)">Hazlo primero</b><p>• Chatbot de WhatsApp<br>• Automatización de citas y respuestas</p></div>
-    <div class="card"><b class="t">Planifícalo</b><p>• Aviso automático a los clientes (recordatorios, vacunas, mascota lista)</p></div>
+    <div class="card dark"><b class="t" style="color:var(--gold)">Hazlo primero</b><p>• Chatbot de WhatsApp<br>• Automatización de citas y respuestas</p></div>
+    <div class="card"><b class="t">Planifícalo</b><p>• Aviso automático a los clientes: recordatorios, vacunas, «tu mascota está lista»</p></div>
     <div class="lab">BAJO<br>IMPACTO</div>
-    <div class="card"><b class="t">Mejoras rápidas</b><p>• Confirmación de citas<br>• Tabla con disponibilidad</p></div>
-    <div class="card warm"><b class="t" style="color:var(--warmInk)">Descártalo</b><p>• Hacer una aplicación propia<br>• Llamadas con IA</p></div>
+    <div class="card gold"><b class="t">Mejoras rápidas</b><p>• Confirmación de citas<br>• Tabla de disponibilidad: una página simple donde el dueño marca los días ocupados y el cliente los ve antes de escribir</p></div>
+    <div class="card"><b class="t" style="color:#9a4b14">Descártalo</b><p>• Hacer una aplicación propia<br>• Llamadas con IA</p></div>
   </div>
   <div class="num">4</div>
 </section>
@@ -116,22 +147,22 @@ ul{padding-left:1.1em}
 <!-- 5 TRES LENTES -->
 <section class="slide">
   <div class="kicker">Formato 9 · Tres lentes</div>
-  <h2>Chatbot + automatización se juntan en una sola idea</h2>
+  <h2>Chatbot + automatización, <span class="script">una sola idea</span></h2>
   <p style="margin-bottom:.8em"><b>Idea finalista:</b> un asistente en el WhatsApp de la veterinaria que responde, agenda y avisa, y que la clínica configura sola.</p>
   <table>
     <tr><th>Lente</th><th>Pregunta</th><th>Evidencia</th><th style="width:8%">¿?</th></tr>
     <tr><td><b>Deseable</b></td><td>¿La quieren?</td><td>Hoy pagan a una persona (~$800/mes) para hacer este trabajo · <span class="pend">N de M veterinarias lo pidieron</span></td><td><b>Sí</b></td></tr>
-    <tr><td><b>Factible</b></td><td>¿La podemos construir?</td><td>API de WhatsApp Business, un modelo de IA y una base de datos de citas: piezas que ya existen</td><td><b>Sí</b></td></tr>
-    <tr><td><b>Viable</b></td><td>¿Alguien la paga?</td><td>Precio de $10 a $25 frente a $800 del costo actual · <span class="pend">encuesta y cartas de intención</span></td><td><b>Sí*</b></td></tr>
+    <tr><td><b>Factible</b></td><td>¿La podemos construir?</td><td>API de WhatsApp Business, un modelo de IA y una base de citas: piezas que ya existen</td><td><b>Sí</b></td></tr>
+    <tr><td><b>Viable</b></td><td>¿Alguien la paga?</td><td>Desde $29 frente a $800 del costo actual · <span class="pend">N clínicas aceptan el piloto</span></td><td><b>Sí*</b></td></tr>
   </table>
-  <div class="band dark"><b>Pasa a prototipo.</b> *Viable se confirma con el piloto: la meta es que veterinarias reales acepten pagar.</div>
+  <div class="band dark"><b style="color:var(--gold)">Pasa a prototipo.</b> *Viable se confirma con el piloto: la meta es que veterinarias reales acepten pagar.</div>
   <div class="num">5</div>
 </section>
 
-<!-- 6 SOLUCION -->
+<!-- 6 SOLUCIÓN -->
 <section class="slide">
   <div class="kicker">La solución</div>
-  <h2>Cómo funciona para el dueño de la mascota</h2>
+  <h2>Cómo funciona para el <span class="script">dueño de la mascota</span></h2>
   <div class="flow">
     <div class="card"><div class="big">1</div><p><b>Escribe</b> al WhatsApp de su veterinaria, a cualquier hora</p></div><div class="arr">›</div>
     <div class="card"><div class="big">2</div><p><b>El asistente responde</b> precios, horarios y servicios de esa clínica</p></div><div class="arr">›</div>
@@ -139,8 +170,8 @@ ul{padding-left:1.1em}
     <div class="card"><div class="big">4</div><p><b>Recibe avisos:</b> recordatorio, vacuna, «tu mascota está lista»</p></div>
   </div>
   <div class="grid g2" style="margin-top:.9em">
-    <div class="card teal"><h3>Para la veterinaria</h3><p>Panel donde ella misma cambia productos, precios y horarios, sin depender de nosotros.</p></div>
-    <div class="card teal"><h3>Si el bot no sabe</h3><p>Pasa la conversación a una persona de la clínica. Nunca da diagnósticos médicos.</p></div>
+    <div class="card gold"><h3>Para la veterinaria</h3><p>Panel donde ella misma cambia productos, precios, horarios y días ocupados, sin depender de nosotros.</p></div>
+    <div class="card gold"><h3>Si el bot no sabe</h3><p>Pasa la conversación a una persona de la clínica. Nunca da diagnósticos ni dosis.</p></div>
   </div>
   <div class="num">6</div>
 </section>
@@ -148,90 +179,109 @@ ul{padding-left:1.1em}
 <!-- 7 PLANES -->
 <section class="slide">
   <div class="kicker">Modelo de negocio</div>
-  <h2>Tres planes según el tamaño de la clínica</h2>
-  <div class="grid g3">
-    <div class="card top"><h3>Básico</h3><div class="price">$10<small> /mes</small></div><p style="color:var(--muted)">1 veterinaria · 1 número</p><ul style="margin-top:.5em"><li>Automatización de WhatsApp</li><li>Agendamiento de citas</li><li>Atención 24/7</li><li>Personaliza sus productos y precios</li></ul></div>
-    <div class="card top" style="border-top-color:var(--brand2)"><h3>Pro</h3><div class="price">$15<small> /mes</small></div><p style="color:var(--muted)">3 o más números</p><ul style="margin-top:.5em"><li>Todo lo del Básico</li><li>Dashboard de tendencias de productos y servicios</li></ul></div>
-    <div class="card top" style="border-top-color:var(--dark)"><h3>Empresa</h3><div class="price">$25<small> /mes</small></div><p style="color:var(--muted)">5 o más sedes</p><ul style="margin-top:.5em"><li>Todo lo del Pro</li><li>Dashboard personalizado</li><li>Módulo de gestión de entrega de mascotas</li></ul></div>
+  <h2>Tres planes, <span class="script">según tu clínica</span></h2>
+  <div class="grid g3" style="align-items:stretch">
+    <div class="card plan"><h3>Básico</h3><div class="price">$29<small> /mes</small></div><p class="who">1 veterinaria · 1 número</p>
+      <ul><li>Bot de WhatsApp 24/7</li><li>Agenda y confirmación de citas</li><li>Tabla de disponibilidad</li><li>La clínica edita sus productos y precios</li></ul></div>
+    <div class="card plan feat"><h3>Pro · el más elegido</h3><div class="price">$59<small> /mes</small></div><p class="who">Hasta 3 números o sedes</p>
+      <ul><li>Todo lo del Básico</li><li>Avisos automáticos a clientes</li><li>Dashboard de tendencias de productos y servicios</li></ul></div>
+    <div class="card plan"><h3>Empresa</h3><div class="price">$149<small> /mes</small></div><p class="who">Hasta 5 sedes · +$20 por sede extra</p>
+      <ul><li>Todo lo del Pro</li><li>Dashboard personalizado</li><li>Módulo de gestión de entrega de mascotas</li></ul></div>
   </div>
-  <div class="band"><b>Lo que nos hace distintos:</b> la clínica maneja sus productos con libertad y ve las estadísticas de su negocio.</div>
+  <div class="band"><b>Primer mes gratis</b> (es nuestro piloto) · <b>pago anual:</b> 2 meses de regalo · Lo que nos hace distintos: la clínica maneja sus productos con libertad y ve las estadísticas de su negocio.</div>
   <div class="num">7</div>
 </section>
 
-<!-- 8 COMPETENCIA -->
+<!-- 8 POR QUÉ ESOS PRECIOS -->
+<section class="slide">
+  <div class="kicker">Formato 13 · Precio frente al valor</div>
+  <h2>Cobramos <span class="script">una fracción</span> de lo que ahorran</h2>
+  <table>
+    <tr><th>Plan</th><th>Valor que recibe la clínica al mes</th><th>Rango (10 % a 20 % del valor)</th><th>Precio</th></tr>
+    <tr><td><b>Básico</b></td><td>El bot absorbe ~1 h diaria de quien contesta (o del mismo veterinario) ≈ $200</td><td>$20 a $40</td><td><b>$29</b></td></tr>
+    <tr><td><b>Pro</b></td><td>Absorbe la mitad del trabajo de la persona de apoyo: $800 × 50 % ≈ $400</td><td>$40 a $80</td><td><b>$59</b></td></tr>
+    <tr><td><b>Empresa</b></td><td>Varias sedes con una persona cada una: ≈ $1 200 o más</td><td>$120 a $240</td><td><b>$149</b></td></tr>
+  </table>
+  <div class="grid g2" style="margin-top:.9em">
+    <div class="card"><h3>Precio mínimo</h3><p>Costo por clínica (WhatsApp API + IA + servidor) ≈ <b>$8</b> <span class="pend">supuesto, confirmar</span> ÷ 0,30 = <b>$27</b>. El Básico ($29) queda sobre el piso.</p></div>
+    <div class="card gold"><h3>Por qué no $10</h3><p>A $10 perdíamos plata en cada clínica y el precio decía «juguete». A $29 sigue siendo 27 veces menos que pagar a una persona.</p></div>
+  </div>
+  <div class="num">8</div>
+</section>
+
+<!-- 9 COMPETENCIA -->
 <section class="slide">
   <div class="kicker">Competencia</div>
-  <h2>Hay competencia, pero no enfocada en clínicas veterinarias</h2>
+  <h2>Hay competencia, pero <span class="script">no para veterinarias</span></h2>
   <table>
-    <tr><th>Competidor</th><th>Qué hace</th><th>Precio</th><th>¿Enfocado en veterinarias?</th><th>Nuestra ventaja</th></tr>
+    <tr><th>Competidor</th><th>Qué hace</th><th>Precio</th><th>¿Para veterinarias?</th><th>Nuestra ventaja</th></tr>
     <tr><td><span class="pend">Competidor 1</span></td><td><span class="pend">…</span></td><td><span class="pend">$…</span></td><td><span class="pend">…</span></td><td><span class="pend">…</span></td></tr>
     <tr><td><span class="pend">Competidor 2</span></td><td><span class="pend">…</span></td><td><span class="pend">$…</span></td><td><span class="pend">…</span></td><td><span class="pend">…</span></td></tr>
     <tr><td><span class="pend">Competidor 3</span></td><td><span class="pend">…</span></td><td><span class="pend">$…</span></td><td><span class="pend">…</span></td><td><span class="pend">…</span></td></tr>
     <tr><td><span class="pend">Competidor 4</span></td><td><span class="pend">…</span></td><td><span class="pend">$…</span></td><td><span class="pend">…</span></td><td><span class="pend">…</span></td></tr>
-    <tr class="hl"><td>AgendaVet</td><td>WhatsApp + citas + dashboard</td><td>$10–$25</td><td>Sí</td><td>Precio y foco en clínicas</td></tr>
+    <tr class="hl"><td>AgendaVet</td><td>WhatsApp + citas + dashboard</td><td>$29–$149</td><td>Sí</td><td>Hecho para clínicas, en español, configurable por ellas</td></tr>
   </table>
-  <div class="band">Datos que entrega el compañero 1 en <code>datos/competencia.csv</code></div>
-  <div class="num">8</div>
-</section>
-
-<!-- 9 DINERO -->
-<section class="slide">
-  <div class="kicker">Formato 13 · ¿Gana dinero en Quito?</div>
-  <h2>Cuánto vale, cuánto cobramos, cuántos clientes</h2>
-  <table>
-    <tr><th>Paso</th><th>Cálculo</th><th>Resultado</th></tr>
-    <tr><td><b>Valor mensual</b></td><td>Persona de apoyo $800 × 50 % del trabajo que absorbe el bot</td><td>≈ $400 por clínica</td></tr>
-    <tr><td><b>Rango de precio</b></td><td>Valor × 0,10 a valor × 0,20</td><td>$40 a $80</td></tr>
-    <tr><td><b>Precio mínimo</b></td><td>Costo por clínica <span class="pend">$__</span> ÷ 0,30</td><td><span class="pend">$__</span></td></tr>
-    <tr class="hl"><td><b>Precio elegido</b></td><td>Por debajo del rango a propósito, para entrar rápido en clínicas pequeñas</td><td>$10 · $15 · $25</td></tr>
-    <tr><td><b>Mercado</b></td><td>Clínicas veterinarias en Quito</td><td><span class="pend">N clínicas</span></td></tr>
-    <tr><td><b>Meta</b></td><td>$1 500/mes (3 socios × $500) ÷ $15 de ticket promedio</td><td>≈ 100 clínicas</td></tr>
-  </table>
-  <div class="band"><b>Lectura honesta:</b> el valor da espacio para cobrar más; empezamos barato para ganar los primeros clientes y subir precio con evidencia.</div>
   <div class="num">9</div>
 </section>
 
-<!-- 10 PROTOTIPO -->
+<!-- 10 DINERO -->
 <section class="slide">
-  <div class="kicker">Formatos 10 y 11 · Lo que sigue</div>
-  <h2>Un piloto de 4 semanas antes de programar todo</h2>
-  <div class="grid g2">
-    <div class="card"><h3>Qué vamos a hacer</h3><p><span class="pend">N</span> veterinarias de Quito. Montamos el bot con WhatsApp Business y una hoja de citas; revisamos a mano cada conversación que el bot no sepa resolver.</p>
-      <p style="margin-top:.6em"><b>Métrica fijada antes:</b> 70 % de las consultas resueltas sin una persona y al menos 1 cita agendada fuera de horario por semana.</p></div>
-    <div class="grid g2">
-      <div class="card teal"><div class="big"><span class="pend">__%</span></div><p>consultas resueltas por el bot</p></div>
-      <div class="card teal"><div class="big"><span class="pend">__</span></div><p>citas fuera de horario</p></div>
-      <div class="card"><div class="big"><span class="pend">__ h</span></div><p>ahorradas por semana</p></div>
-      <div class="card"><div class="big"><span class="pend">_ de _</span></div><p>clínicas dispuestas a pagar</p></div>
-    </div>
-  </div>
+  <div class="kicker">Formato 13 · ¿Gana dinero en Quito?</div>
+  <h2>Con <span class="script">33 clínicas</span> el negocio ya se sostiene</h2>
+  <table>
+    <tr><th>Paso</th><th>Cálculo</th><th>Resultado</th></tr>
+    <tr><td><b>Ticket promedio</b></td><td>Mezcla esperada: 60 % Básico, 35 % Pro, 5 % Empresa</td><td>≈ $46 al mes</td></tr>
+    <tr><td><b>Meta mensual</b></td><td>3 socios × $500</td><td>$1 500 al mes</td></tr>
+    <tr class="hl"><td>Clientes necesarios</td><td>$1 500 ÷ $46 (redondeado hacia arriba)</td><td>33 clínicas</td></tr>
+    <tr><td><b>Mercado</b></td><td>Clínicas veterinarias en Quito</td><td><span class="pend">N clínicas</span> → 33 es el <span class="pend">__ %</span></td></tr>
+    <tr><td><b>LTV ÷ CAC</b></td><td>($46 × 0,80 ÷ 4 % de abandono mensual) ÷ $100 por conseguir cada clínica</td><td>≈ 9: sano (meta: más de 3)</td></tr>
+  </table>
+  <div class="band dark">Abandono y costo de conseguir clientes son <b style="color:var(--gold)">supuestos</b>: el piloto nos da los números reales.</div>
   <div class="num">10</div>
 </section>
 
-<!-- 11 IA Y RESPONSABILIDAD -->
+<!-- 11 PILOTO -->
 <section class="slide">
-  <div class="kicker">Reflexión</div>
-  <h2>La IA contesta; nosotros respondemos por ella</h2>
+  <div class="kicker">Formatos 10 y 11 · Lo que sigue</div>
+  <h2>Un piloto de <span class="script">4 semanas</span> antes de programar todo</h2>
   <div class="grid g2">
-    <div class="card"><h3>Lo que hace la IA</h3><ul><li>Responde preguntas frecuentes</li><li>Propone horarios y agenda</li><li>Resume tendencias para el dashboard</li></ul></div>
-    <div class="card teal"><h3>Lo que hacemos nosotros</h3><ul><li>Hablar con las veterinarias en persona</li><li>Proteger los datos de clientes y mascotas (Ley Orgánica de Protección de Datos Personales)</li><li>Prohibir al bot dar diagnósticos o dosis</li><li>Cobrar y firmar con las clínicas</li></ul></div>
+    <div class="card"><h3>Qué vamos a hacer</h3><p><span class="pend">N</span> veterinarias de Quito con el primer mes gratis. Montamos el bot con WhatsApp Business y una hoja de citas; revisamos a mano cada conversación que el bot no sepa resolver.</p>
+      <p style="margin-top:.6em"><b>Métrica fijada antes:</b> 70 % de consultas resueltas sin una persona, al menos 1 cita fuera de horario por semana y 1 de cada 2 clínicas pasa a pagar.</p></div>
+    <div class="grid g2">
+      <div class="card gold"><div class="big"><span class="pend">__%</span></div><p>consultas resueltas por el bot</p></div>
+      <div class="card gold"><div class="big"><span class="pend">__</span></div><p>citas fuera de horario</p></div>
+      <div class="card"><div class="big"><span class="pend">__ h</span></div><p>ahorradas por semana</p></div>
+      <div class="card"><div class="big"><span class="pend">_ de _</span></div><p>clínicas que pasan a pagar</p></div>
+    </div>
   </div>
   <div class="num">11</div>
 </section>
 
-<!-- 12 CIERRE -->
-<section class="slide cover">
-  <div class="kicker">Gracias</div>
-  <h1>Menos horas en WhatsApp,<br>más citas agendadas</h1>
-  <p class="sub">Desde $10 al mes, una veterinaria de Quito atiende a sus clientes las 24 horas y sabe qué le está funcionando.</p>
-  <div class="foot" style="color:#cfe7e3">¿Preguntas?</div>
+<!-- 12 RESPONSABILIDAD -->
+<section class="slide">
+  <div class="kicker">Reflexión</div>
+  <h2>La IA contesta; <span class="script">nosotros respondemos</span></h2>
+  <div class="grid g2">
+    <div class="card"><h3>Lo que hace la IA</h3><ul><li>Responde preguntas frecuentes</li><li>Propone horarios y agenda</li><li>Resume tendencias para el dashboard</li></ul></div>
+    <div class="card dark"><h3>Lo que hacemos nosotros</h3><ul><li>Hablar con las veterinarias en persona</li><li>Proteger los datos de clientes y mascotas (Ley Orgánica de Protección de Datos Personales)</li><li>Prohibir al bot dar diagnósticos o dosis</li><li>Cobrar y firmar con las clínicas</li></ul></div>
+  </div>
+  <div class="num">12</div>
+</section>
+
+<!-- 13 CIERRE -->
+<section class="slide dark-slide">
+  <div class="topbar"><span class="logo">AgendaVet</span><span class="pill">¿Preguntas?</span></div>
+  <p class="hero-sub">Menos horas en WhatsApp, más</p>
+  <div class="hero-title">citas</div>
+  <p class="hero-text">Desde $29 al mes, una veterinaria de Quito atiende a sus clientes las 24 horas y sabe qué le está funcionando.</p>
+  <div style="margin-bottom:auto"></div>
 </section>
 
 </div>
-<div class="nav">← → para navegar · F para pantalla completa · Ctrl+P para PDF</div>
+<div class="nav">← → para navegar · F pantalla completa · Ctrl+P para PDF</div>
 <script>
 const s=[...document.querySelectorAll('.slide')];let i=0;
-const show=n=>{i=Math.max(0,Math.min(s.length-1,n));s.forEach((x,k)=>x.classList.toggle('active',k===i));try{location.hash=i+1}catch(e){}};
+const show=n=>{i=Math.max(0,Math.min(s.length-1,n));s.forEach((x,k)=>x.classList.toggle('active',k===i));try{history.replaceState(null,'','#'+(i+1))}catch(e){}};
 document.addEventListener('keydown',e=>{
   if(['ArrowRight','PageDown',' '].includes(e.key))show(i+1);
   if(['ArrowLeft','PageUp'].includes(e.key))show(i-1);
