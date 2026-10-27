@@ -1,1 +1,529 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=presentacion/"><title>AgendaVet</title></head><body><a href="presentacion/">Abrir la presentación</a></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgendaVet · Tu veterinaria atiende sola</title>
+<meta name="description" content="Automatización de WhatsApp para clínicas veterinarias de Quito: responde 24/7, agenda citas y muestra estadísticas del negocio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#282828;--darker:#212121;--tan:#c4956a;--tanSoft:#f4ebe2;--light:#f5f5f5;--ink:#212121;--txt:#5f5f5f;--line:#e5e5e5;--wa:#25d366}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:Montserrat,"Segoe UI",Roboto,Arial,sans-serif;color:var(--txt);background:#fff;font-size:15px;line-height:1.7;letter-spacing:-.01em;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{color:var(--ink);text-transform:uppercase;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+h2{font-size:clamp(28px,3.6vw,46px);font-weight:800}
+h2 .thin,h1 .thin{font-weight:300}
+h4{font-size:15px}
+.kick{color:var(--tan);text-transform:uppercase;font-weight:700;font-size:13px;letter-spacing:.06em;margin-bottom:10px;display:block}
+.wrap{max-width:1170px;margin:0 auto;padding:0 20px}
+.sec{padding:110px 0;position:relative}
+.dark{background:var(--dark);color:rgba(255,255,255,.6)}
+.dark h2,.dark h3,.dark h4{color:#fff}
+.lines::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(196,196,196,.05) 0 1px,transparent 1px 12.5%)}
+.btn{display:inline-block;border:2px solid var(--tan);color:#fff;padding:14px 32px;font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:.03em;transition:.3s;cursor:pointer;background:transparent;font-family:inherit}
+.btn:hover,.btn.fill{background:var(--tan);color:#fff}
+.btn.fill:hover{background:#b0835a;border-color:#b0835a}
+.btn.ink{color:var(--ink)}.btn.ink:hover{color:#fff}
+.pend{background:var(--tanSoft);color:#8a5a2b;padding:0 5px;font-weight:700}
+
+/* preloader */
+#pre{position:fixed;inset:0;background:var(--darker);z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s}
+#pre.out{opacity:0;visibility:hidden}
+#pre svg{width:64px;animation:pulse 1s ease-in-out infinite alternate}
+@keyframes pulse{from{transform:scale(.85) rotate(-8deg);opacity:.5}to{transform:scale(1.05) rotate(8deg);opacity:1}}
+
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.35s}
+.hbar{display:flex;align-items:center;justify-content:space-between;height:90px;padding:0 40px;transition:.35s}
+header.stuck{background:var(--darker);box-shadow:0 4px 24px rgba(0,0,0,.25)}
+header.stuck .hbar{height:64px}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;font-weight:800;letter-spacing:.14em;font-size:19px}
+.logo svg{width:40px}
+nav.links{display:flex;gap:34px}
+nav.links a{color:#fff;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.04em;position:relative;padding:6px 0}
+nav.links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--tan);transition:.3s}
+nav.links a:hover::after,nav.links a.on::after{width:100%}
+.burger{display:none;width:34px;height:24px;position:relative;cursor:pointer;background:none;border:0}
+.burger span{position:absolute;left:0;right:0;height:2px;background:#fff;transition:.3s}
+.burger span:nth-child(1){top:2px}.burger span:nth-child(2){top:11px}.burger span:nth-child(3){top:20px}
+.burger.x span:nth-child(1){top:11px;transform:rotate(45deg)}.burger.x span:nth-child(2){opacity:0}.burger.x span:nth-child(3){top:11px;transform:rotate(-45deg)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:38% 62%;min-height:100vh;background:var(--dark);position:relative}
+.hero-l{position:relative;display:flex;flex-direction:column;justify-content:center;padding:120px 50px 80px 7vw;z-index:2}
+.hero-l h1{font-size:clamp(34px,4.2vw,60px);color:#fff;font-weight:800;line-height:1.05}
+.hero-l .sub{color:var(--tan);font-weight:700;text-transform:uppercase;font-size:clamp(14px,1.3vw,18px);margin:22px 0 34px;line-height:1.5;max-width:380px}
+.hero-r{position:relative;overflow:hidden;background:#3a2c20}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;display:flex;align-items:center;justify-content:center}
+.slide.on{opacity:1;z-index:1}
+.s1{background:radial-gradient(circle at 70% 30%,#d9b48f,#c4956a 40%,#6e4c31 85%)}
+.s2{background:radial-gradient(circle at 30% 30%,#8fa6a0,#4f6b66 45%,#253532 90%)}
+.s3{background:radial-gradient(circle at 60% 60%,#9a8270,#5b4636 50%,#2a1f17 95%)}
+.slide .scene{transform:scale(.96);transition:transform 6s ease}
+.slide.on .scene{transform:scale(1.04)}
+.cap{position:absolute;left:0;right:0;bottom:0;background:rgba(33,33,33,.92);display:flex;align-items:center;z-index:3;min-height:96px}
+.cap ul{list-style:none;display:flex;flex:1;padding:0 36px;gap:46px}
+.cap li{color:#fff;font-weight:700;text-transform:uppercase;font-size:13px;opacity:0;transform:translateY(-20px);transition:.6s}
+.cap li small{display:block;color:rgba(255,255,255,.45);font-size:11px;font-weight:500}
+.cap.anim li{opacity:1;transform:none}
+.cap.anim li:nth-child(2){transition-delay:.12s}.cap.anim li:nth-child(3){transition-delay:.24s}
+.ctr{background:var(--tan);color:#fff;display:flex;align-items:center;gap:18px;padding:0 26px;height:96px;font-weight:800}
+.ctr b{font-size:28px}.ctr span{opacity:.6;font-size:13px}
+.ctr button{background:none;border:0;color:#fff;font-size:22px;cursor:pointer;width:34px;height:34px;border-radius:50%;transition:.25s}
+.ctr button:hover{background:rgba(255,255,255,.2)}
+/* phone mock */
+.phone{width:260px;height:520px;background:#111;border-radius:36px;padding:12px;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.screen{background:#ece5dd;height:100%;border-radius:26px;overflow:hidden;display:flex;flex-direction:column}
+.wtop{background:#075e54;color:#fff;padding:14px 14px 10px;font-size:12px;font-weight:700;display:flex;gap:8px;align-items:center}
+.wtop i{width:28px;height:28px;border-radius:50%;background:var(--tan);display:inline-block}
+.wtop small{display:block;font-weight:400;opacity:.8;font-size:10px}
+.msgs{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:7px;font-size:11.5px;line-height:1.4}
+.m{max-width:82%;padding:7px 10px;border-radius:9px;color:#222;opacity:0;transform:translateY(8px);transition:.4s}
+.m.show{opacity:1;transform:none}
+.m.in{background:#fff;align-self:flex-start}.m.out{background:#dcf8c6;align-self:flex-end}
+.m.typing{width:44px}.m.typing span{display:inline-block;width:5px;height:5px;margin:0 1px;border-radius:50%;background:#999;animation:dot 1s infinite}
+.m.typing span:nth-child(2){animation-delay:.15s}.m.typing span:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{transform:translateY(-4px)}}
+/* calendar mock */
+.cal{background:#fff;width:min(420px,80%);padding:24px;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+.cal h4{margin-bottom:12px}
+.cal .grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;font-size:12px;text-align:center}
+.cal .d{padding:9px 0;background:var(--light);font-weight:700;color:var(--ink)}
+.cal .d.busy{background:var(--dark);color:#fff;text-decoration:line-through}
+.cal .d.free{background:var(--tanSoft);color:#8a5a2b}
+/* dash mock */
+.dash{background:var(--darker);width:min(460px,82%);padding:24px;box-shadow:0 30px 70px rgba(0,0,0,.45);color:#fff}
+.bars{display:flex;align-items:flex-end;gap:12px;height:170px;margin-top:16px;border-bottom:1px solid rgba(255,255,255,.15)}
+.bars div{flex:1;background:var(--tan);height:0;transition:height 1.2s cubic-bezier(.2,.8,.2,1)}
+.slide.on .bars div{height:var(--h)}
+.blab{display:flex;gap:12px;font-size:10px;color:rgba(255,255,255,.5);margin-top:6px}.blab span{flex:1;text-align:center}
+
+/* reveal */
+[data-r]{opacity:0;transition:opacity .9s ease,transform .9s ease,filter .9s ease}
+[data-r=left]{transform:translateX(-60px)}[data-r=right]{transform:translateX(60px)}[data-r=up]{transform:translateY(50px)}[data-r=blur]{filter:blur(14px);transform:scale(.96)}
+[data-r].in{opacity:1;transform:none;filter:none}
+
+/* services */
+.svc{display:grid;grid-template-columns:300px 1fr 400px;gap:40px;align-items:center}
+.svc-list .it{display:flex;gap:16px;margin-bottom:34px}
+.svc-list .ic{flex:none;width:52px;height:52px;border:2px solid var(--tan);display:flex;align-items:center;justify-content:center}
+.svc-list .ic svg{width:26px;stroke:var(--tan);fill:none;stroke-width:2}
+.svc-list p{font-size:13px;line-height:1.6}
+.para{position:relative;height:440px}
+.para .ly{position:absolute;transition:transform .2s ease-out}
+.calc{background:var(--dark);padding:40px 36px;color:rgba(255,255,255,.6);box-shadow:0 30px 60px rgba(0,0,0,.18)}
+.calc h3{color:#fff;font-size:24px;font-weight:800;margin-bottom:8px}
+.calc label{display:block;font-size:11px;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.5);margin:18px 0 6px}
+.calc input[type=range]{width:100%;accent-color:var(--tan)}
+.calc .val{color:#fff;font-weight:700;float:right}
+.calc .res{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)}
+.calc .res b{color:var(--tan);font-size:30px;display:block;line-height:1.1}
+
+/* how */
+.how{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:20px 30px;margin-bottom:34px}
+.tab{display:flex;gap:14px;cursor:pointer;color:rgba(255,255,255,.4);font-weight:700;text-transform:uppercase;font-size:13px;transition:.3s;line-height:1.4}
+.tab b{color:var(--tan)}
+.tab.on,.tab:hover{color:#fff}
+.pane{display:none;animation:fadeL .6s ease}.pane.on{display:block}
+@keyframes fadeL{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+.pane h3{color:var(--tan);font-size:26px;margin:0 0 16px}
+.how-img{background:radial-gradient(circle at 40% 40%,#4a3a2d,#2c231c);height:420px;display:flex;align-items:center;justify-content:center;position:relative}
+.how-img .big{font-size:180px;font-weight:800;color:rgba(196,149,106,.18);position:absolute;right:20px;bottom:-20px;line-height:1}
+.how-img .ill{width:62%;transition:.5s}
+
+/* matrix */
+.mx{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:40px}
+.q{padding:34px 32px;min-height:220px;position:relative;overflow:hidden;background:var(--light);transition:.4s}
+.q:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.1)}
+.q .lab{font-size:11px;font-weight:700;color:var(--txt);text-transform:uppercase;letter-spacing:.06em}
+.q h3{font-size:22px;margin:8px 0 14px}
+.q ul{list-style:none}.q li{padding:3px 0 3px 18px;position:relative}
+.q li::before{content:"";position:absolute;left:0;top:12px;width:8px;height:2px;background:var(--tan)}
+.q.win{background:var(--dark);color:rgba(255,255,255,.7)}.q.win h3{color:var(--tan)}.q.win .lab{color:rgba(255,255,255,.45)}
+.q.no{background:#fff;border:1px solid var(--line)}
+.lens{margin-top:50px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.lens div{border-top:2px solid var(--tan);padding-top:18px}
+.lens b{display:block;color:var(--ink);text-transform:uppercase;font-size:14px}
+.lens .yes{color:var(--tan);font-weight:800;font-size:28px;float:right;line-height:1}
+
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;align-items:stretch}
+.plan{border:1px solid var(--line);padding:42px 34px;transition:.4s;display:flex;flex-direction:column;background:#fff}
+.plan:hover{transform:translateY(-10px);box-shadow:0 26px 50px rgba(0,0,0,.12)}
+.plan h4{color:var(--tan)}
+.plan .pr{font-size:48px;font-weight:800;color:var(--ink);line-height:1;margin:14px 0 4px}
+.plan .pr small{font-size:15px;font-weight:500;color:var(--txt)}
+.plan .who{font-size:11px;text-transform:uppercase;font-weight:700;letter-spacing:.04em;margin-bottom:22px}
+.plan ul{list-style:none;flex:1;margin-bottom:28px}
+.plan li{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.plan.feat{background:var(--dark);border-color:var(--dark);color:rgba(255,255,255,.65)}
+.plan.feat .pr{color:#fff}.plan.feat li{border-color:rgba(255,255,255,.1)}
+.plan .tag{align-self:flex-start;background:var(--tan);color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;padding:4px 10px;margin-bottom:14px}
+.note{margin-top:30px;text-align:center;font-size:13px}
+
+/* counters */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.st{border-left:2px solid var(--tan);padding-left:22px}
+.st .n{font-size:58px;font-weight:800;color:var(--ink);line-height:1}
+.st .n i{font-style:normal;color:var(--tan)}
+.st p{font-size:13px;text-transform:uppercase;font-weight:700;margin-top:8px}
+
+/* availability demo */
+.av{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px}
+.av-box{border:1px solid var(--line);padding:28px}
+.av-box h4{margin-bottom:6px}
+.av-box .hint{font-size:12px;margin-bottom:16px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.days .dn{font-size:10px;text-align:center;font-weight:700;text-transform:uppercase;color:var(--txt)}
+.day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink);background:var(--light);font-size:13px;transition:.25s;border:0;font-family:inherit}
+.owner .day{cursor:pointer}.owner .day:hover{background:var(--tanSoft)}
+.day.busy{background:var(--dark);color:#fff}
+.client .day.free{background:var(--tanSoft);color:#8a5a2b}
+.client .day.busy{text-decoration:line-through;opacity:.55}
+.legend{display:flex;gap:16px;font-size:11px;margin-top:14px;text-transform:uppercase;font-weight:700}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px}
+
+/* evidence dark */
+.ev{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.ev .c{border:1px solid rgba(255,255,255,.1);padding:30px;position:relative}
+.ev .c::before{content:"“";position:absolute;top:-8px;left:22px;font-size:80px;color:var(--tan);line-height:1;font-weight:800}
+.ev .c p{margin-top:28px;font-style:italic}
+.ev .c b{display:block;color:#fff;margin-top:18px;text-transform:uppercase;font-size:12px}
+
+/* team */
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+.mem{position:relative;overflow:hidden;background:var(--light)}
+.mem .av{height:260px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#ddd,#f5f5f5);transition:.5s;margin:0;grid-template-columns:none}
+.mem:hover .av{transform:scale(1.06)}
+.mem .av svg{width:90px;fill:#bdbdbd}
+.mem .inf{padding:20px 22px;background:#fff;position:relative}
+.mem .inf h4{font-size:16px}
+.mem .inf p{color:var(--tan);font-size:13px;font-weight:500}
+
+/* cta */
+.cta{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+form.lead{background:var(--dark);padding:40px}
+form.lead input,form.lead select{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.2);color:#fff;padding:12px 0;margin-bottom:18px;font-family:inherit;font-size:14px;outline:none;transition:.3s}
+form.lead input:focus{border-color:var(--tan)}
+form.lead select option{color:#000}
+form.lead .ok{display:none;color:var(--tan);font-weight:700;margin-top:16px}
+
+footer{background:var(--darker);color:rgba(255,255,255,.45);padding:50px 0;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+#top{position:fixed;right:24px;bottom:24px;width:48px;height:48px;background:var(--tan);color:#fff;border:0;font-size:22px;cursor:pointer;z-index:40;opacity:0;transform:translateY(20px);transition:.35s}
+#top.show{opacity:1;transform:none}
+#top:hover{background:var(--dark)}
+
+@media(max-width:1000px){
+  nav.links{position:fixed;top:0;right:0;bottom:0;width:260px;background:var(--darker);flex-direction:column;padding:100px 34px;gap:18px;transform:translateX(100%);transition:.4s;visibility:hidden}
+  nav.links.open{transform:none;visibility:visible}
+  .burger{display:block;z-index:60}
+  .hero{grid-template-columns:1fr}.hero-l{padding:130px 24px 50px}.hero-r{height:560px}
+  .svc,.how,.av,.cta{grid-template-columns:1fr}.para{display:none}
+  .plans,.ev,.team,.lens{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.mx{grid-template-columns:1fr}
+  .cap ul{gap:18px;padding:0 16px}.cap li:nth-child(3){display:none}
+  .hbar{padding:0 20px}.sec{padding:80px 0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}[data-r]{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+
+<div id="pre"><svg viewBox="0 0 40 40"><g fill="#c4956a"><ellipse cx="20" cy="25" rx="7" ry="6"/><circle cx="11" cy="17" r="3"/><circle cx="16.5" cy="12" r="3"/><circle cx="23.5" cy="12" r="3"/><circle cx="29" cy="17" r="3"/></g></svg></div>
+
+<header id="hdr">
+  <div class="hbar">
+    <a href="#inicio" class="logo"><svg viewBox="0 0 40 40"><polygon points="20,2 37,11 37,29 20,38 3,29 3,11" fill="none" stroke="#fff" stroke-width="2.5"/><g fill="#c4956a"><ellipse cx="20" cy="25" rx="6" ry="5"/><circle cx="12.5" cy="18" r="2.4"/><circle cx="17" cy="14" r="2.4"/><circle cx="23" cy="14" r="2.4"/><circle cx="27.5" cy="18" r="2.4"/></g></svg>AGENDAVET</a>
+    <nav class="links" id="nav">
+      <a href="#servicios">Servicios</a><a href="#como">Cómo funciona</a><a href="#idea">La idea</a><a href="#planes">Planes</a><a href="#disponibilidad">Disponibilidad</a><a href="#contacto">Contacto</a><a href="presentacion/">Presentación</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero lines" id="inicio">
+  <div class="hero-l">
+    <h1 data-r="left">Tu veterinaria <span class="thin">atiende</span> sola</h1>
+    <p class="sub" data-r="left" style="transition-delay:.1s">WhatsApp automático para clínicas veterinarias de Quito, desde $29 al mes</p>
+    <div data-r="left" style="transition-delay:.2s"><a href="#planes" class="btn">Ver planes</a></div>
+  </div>
+  <div class="hero-r">
+    <div class="slide s1 on"><div class="scene">
+      <div class="phone"><div class="screen">
+        <div class="wtop"><i></i><div>Veterinaria San Francisco<small>en línea · responde AgendaVet</small></div></div>
+        <div class="msgs" id="chat"></div>
+      </div></div>
+    </div></div>
+    <div class="slide s2"><div class="scene">
+      <div class="cal"><h4>Noviembre · disponibilidad</h4>
+        <div class="grid7" id="heroCal"></div>
+      </div>
+    </div></div>
+    <div class="slide s3"><div class="scene">
+      <div class="dash"><h4 style="color:#fff">Servicios más pedidos · octubre</h4>
+        <div class="bars"><div style="--h:85%"></div><div style="--h:62%"></div><div style="--h:48%"></div><div style="--h:35%"></div><div style="--h:22%"></div></div>
+        <div class="blab"><span>Vacunas</span><span>Baño</span><span>Consulta</span><span>Despar.</span><span>Cirugía</span></div>
+        <p style="font-size:10px;margin-top:10px;color:rgba(255,255,255,.4)">Datos de ejemplo</p>
+      </div>
+    </div></div>
+    <div class="cap anim" id="cap">
+      <ul id="capList"></ul>
+      <div class="ctr"><button id="prev" aria-label="Anterior">←</button><b id="cnum">01</b><span>/03</span><button id="next" aria-label="Siguiente">→</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="sec" id="servicios">
+  <div class="wrap svc">
+    <div class="svc-list">
+      <div class="it" data-r="left"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.8A8 8 0 1 1 21 12z"/></svg></div><div><h4>Bot 24/7</h4><p>Responde precios, horarios y servicios de tu clínica a cualquier hora.</p></div></div>
+      <div class="it" data-r="left" style="transition-delay:.08s"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><div><h4>Agenda citas</h4><p>Ofrece horarios libres, reserva y confirma sin que nadie conteste.</p></div></div>
+      <div class="it" data-r="left" style="transition-delay:.16s"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><div><h4>Estadísticas</h4><p>Ve qué servicios se piden más y a qué hora escriben tus clientes.</p></div></div>
+      <div class="it" data-r="left" style="transition-delay:.24s"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 20l-8-8 8-8 8 8z"/><path d="M12 8v8M8 12h8"/></svg></div><div><h4>Tú lo configuras</h4><p>Cambia productos, precios y días ocupados sin depender de nosotros.</p></div></div>
+    </div>
+    <div class="para" id="para">
+      <svg class="ly" data-d="12" style="left:8%;top:6%;width:84%" viewBox="0 0 300 300"><g fill="none" stroke="#e2e2e2" stroke-width="1"><circle cx="150" cy="150" r="140"/><circle cx="150" cy="150" r="100"/><circle cx="150" cy="150" r="60"/><path d="M10 150h280M150 10v280"/></g></svg>
+      <svg class="ly" data-d="-22" style="left:24%;top:22%;width:52%" viewBox="0 0 200 200"><g fill="none" stroke="#c4956a" stroke-width="3"><ellipse cx="100" cy="128" rx="40" ry="33"/><circle cx="52" cy="80" r="15"/><circle cx="80" cy="52" r="15"/><circle cx="120" cy="52" r="15"/><circle cx="148" cy="80" r="15"/></g></svg>
+      <svg class="ly" data-d="34" style="left:62%;top:10%;width:18%" viewBox="0 0 40 40"><g fill="#c4956a" opacity=".55"><ellipse cx="20" cy="25" rx="7" ry="6"/><circle cx="11" cy="17" r="3"/><circle cx="16.5" cy="12" r="3"/><circle cx="23.5" cy="12" r="3"/><circle cx="29" cy="17" r="3"/></g></svg>
+      <svg class="ly" data-d="-40" style="left:6%;top:68%;width:14%" viewBox="0 0 40 40"><g fill="#282828" opacity=".25"><ellipse cx="20" cy="25" rx="7" ry="6"/><circle cx="11" cy="17" r="3"/><circle cx="16.5" cy="12" r="3"/><circle cx="23.5" cy="12" r="3"/><circle cx="29" cy="17" r="3"/></g></svg>
+      <div class="ly" data-d="26" style="left:58%;top:72%;background:var(--dark);color:#fff;padding:10px 16px;font-size:12px;font-weight:700">✓ Cita confirmada · 10:30</div>
+    </div>
+    <div class="calc" data-r="blur">
+      <span class="kick">Calculadora</span>
+      <h3>¿Cuánto ahorra tu clínica?</h3>
+      <label>Sueldo de quien contesta WhatsApp <span class="val" id="vS">$800</span></label>
+      <input type="range" id="iS" min="300" max="1500" step="50" value="800">
+      <label>Parte de su día en WhatsApp <span class="val" id="vP">50%</span></label>
+      <input type="range" id="iP" min="10" max="100" step="5" value="50">
+      <label>Números o sedes <span class="val" id="vN">1</span></label>
+      <input type="range" id="iN" min="1" max="8" step="1" value="1">
+      <div class="res"><span style="font-size:11px;text-transform:uppercase;font-weight:700">Hoy gastas en WhatsApp</span><b id="rG">$400 / mes</b>
+        <p style="margin-top:10px;color:#fff" id="rP">Plan sugerido: Básico $29 → ahorras $371 al mes</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="sec dark lines" id="como">
+  <div class="wrap how">
+    <div>
+      <span class="kick" data-r="left">4 pasos para el dueño de la mascota</span>
+      <h2 data-r="left" style="margin-bottom:34px">Cómo <span class="thin">funciona</span></h2>
+      <div data-r="left" style="transition-delay:.1s">
+        <div class="pane on" data-p="0"><h3>Escribe a cualquier hora</h3><p>El cliente escribe al mismo WhatsApp de siempre. No descarga ninguna app ni crea usuario: así ya se comunica con su veterinaria.</p></div>
+        <div class="pane" data-p="1"><h3>El asistente responde</h3><p>Contesta con los precios, horarios y servicios que la clínica configuró. Si la pregunta es médica o no sabe, pasa la conversación a una persona. Nunca da diagnósticos ni dosis.</p></div>
+        <div class="pane" data-p="2"><h3>Agenda la cita</h3><p>Ofrece solo los horarios libres, respeta los días que el dueño marcó como ocupados, reserva y envía la confirmación.</p></div>
+        <div class="pane" data-p="3"><h3>Recibe avisos</h3><p>Recordatorio un día antes, aviso de vacunas y «tu mascota está lista para retirar». Menos citas perdidas y menos llamadas.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="tabs" data-r="right">
+        <div class="tab on" data-t="0"><b>01</b>Escribe por WhatsApp</div>
+        <div class="tab" data-t="1"><b>02</b>El bot responde</div>
+        <div class="tab" data-t="2"><b>03</b>Agenda la cita</div>
+        <div class="tab" data-t="3"><b>04</b>Recibe avisos</div>
+      </div>
+      <div class="how-img" data-r="blur"><span class="big" id="howNum">01</span>
+        <svg class="ill" id="howIll" viewBox="0 0 200 200"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LA IDEA -->
+<section class="sec" id="idea">
+  <div class="wrap">
+    <span class="kick" data-r="right">Formato 9 · Matriz impacto-esfuerzo</span>
+    <h2 data-r="right">De ocho ideas, <span class="thin">dos ganaron</span></h2>
+    <p data-r="right" style="max-width:720px;margin-top:14px">El problema: las veterinarias pequeñas y medianas pagan cerca de $800 al mes a una persona para contestar WhatsApp, y fuera de horario nadie responde.</p>
+    <div class="mx">
+      <div class="q win" data-r="blur"><span class="lab">Alto impacto · bajo esfuerzo</span><h3>Hazlo primero</h3><ul><li>Chatbot de WhatsApp</li><li>Automatización de citas y respuestas</li></ul></div>
+      <div class="q" data-r="blur" style="transition-delay:.08s"><span class="lab">Alto impacto · alto esfuerzo</span><h3>Planifícalo</h3><ul><li>Aviso automático a los clientes</li></ul></div>
+      <div class="q" data-r="blur" style="transition-delay:.16s"><span class="lab">Bajo impacto · bajo esfuerzo</span><h3>Mejoras rápidas</h3><ul><li>Confirmación de citas</li><li>Tabla de disponibilidad</li></ul></div>
+      <div class="q no" data-r="blur" style="transition-delay:.24s"><span class="lab">Bajo impacto · alto esfuerzo</span><h3>Descártalo</h3><ul><li>Hacer una aplicación propia</li><li>Llamadas con IA</li></ul></div>
+    </div>
+    <div class="lens">
+      <div data-r="up"><span class="yes">Sí</span><b>Deseable</b><p>Hoy ya pagan a una persona por este trabajo.</p></div>
+      <div data-r="up" style="transition-delay:.1s"><span class="yes">Sí</span><b>Factible</b><p>WhatsApp Business API, un modelo de IA y una base de citas.</p></div>
+      <div data-r="up" style="transition-delay:.2s"><span class="yes">Sí*</span><b>Viable</b><p>Desde $29 frente a $800. *Se confirma con el piloto.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTADORES -->
+<section class="sec" style="background:var(--light);padding:90px 0">
+  <div class="wrap stats">
+    <div class="st" data-r="up"><div class="n"><span data-c="24">0</span><i>/7</i></div><p>Atención por WhatsApp</p></div>
+    <div class="st" data-r="up" style="transition-delay:.1s"><div class="n"><i>$</i><span data-c="29">0</span></div><p>Desde, al mes</p></div>
+    <div class="st" data-r="up" style="transition-delay:.2s"><div class="n"><span data-c="33">0</span></div><p>Clínicas para sostener el negocio</p></div>
+    <div class="st" data-r="up" style="transition-delay:.3s"><div class="n"><span data-c="70">0</span><i>%</i></div><p>Meta de consultas sin una persona</p></div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section class="sec" id="planes">
+  <div class="wrap">
+    <span class="kick" data-r="left" style="text-align:center">Precio según el valor que recibe tu clínica</span>
+    <h2 data-r="left" style="text-align:center">Tres <span class="thin">planes</span></h2>
+    <div class="plans">
+      <div class="plan" data-r="up"><h4>Básico</h4><div class="pr">$29<small> /mes</small></div><div class="who">1 veterinaria · 1 número</div>
+        <ul><li>Bot de WhatsApp 24/7</li><li>Agenda y confirmación de citas</li><li>Tabla de disponibilidad</li><li>Editas tus productos y precios</li></ul><a href="#contacto" class="btn ink">Probar gratis</a></div>
+      <div class="plan feat" data-r="up" style="transition-delay:.1s"><span class="tag">El más elegido</span><h4>Pro</h4><div class="pr">$59<small style="color:rgba(255,255,255,.5)"> /mes</small></div><div class="who">Hasta 3 números o sedes</div>
+        <ul><li>Todo lo del Básico</li><li>Avisos automáticos a clientes</li><li>Dashboard de tendencias</li></ul><a href="#contacto" class="btn fill">Probar gratis</a></div>
+      <div class="plan" data-r="up" style="transition-delay:.2s"><h4>Empresa</h4><div class="pr">$149<small> /mes</small></div><div class="who">Hasta 5 sedes · +$20 por sede extra</div>
+        <ul><li>Todo lo del Pro</li><li>Dashboard personalizado</li><li>Gestión de entrega de mascotas</li></ul><a href="#contacto" class="btn ink">Hablar con nosotros</a></div>
+    </div>
+    <p class="note" data-r="up">Primer mes gratis · Pago anual con 2 meses de regalo</p>
+  </div>
+</section>
+
+<!-- DISPONIBILIDAD (mejora rápida) -->
+<section class="sec" id="disponibilidad" style="background:var(--light)">
+  <div class="wrap">
+    <span class="kick" data-r="right">Mejora rápida · pruébala</span>
+    <h2 data-r="right">Tabla de <span class="thin">disponibilidad</span></h2>
+    <p data-r="right" style="max-width:700px;margin-top:12px">El dueño marca los días ocupados y el cliente los ve antes de escribir. Haz clic en los días del lado izquierdo.</p>
+    <div class="av">
+      <div class="av-box owner" data-r="left" style="background:#fff"><h4>Vista del dueño</h4><p class="hint">Clic para marcar o desmarcar un día ocupado.</p><div class="days" id="ownerDays"></div>
+        <div class="legend"><span><i style="background:var(--dark)"></i>Ocupado</span><span><i style="background:var(--light);border:1px solid #ddd"></i>Libre</span></div></div>
+      <div class="av-box client" data-r="right" style="background:#fff"><h4>Lo que ve el cliente</h4><p class="hint">Se actualiza al instante.</p><div class="days" id="clientDays"></div>
+        <div class="legend"><span><i style="background:var(--tanSoft)"></i>Puedes agendar</span><span><i style="background:var(--dark);opacity:.5"></i>No disponible</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVIDENCIA -->
+<section class="sec dark lines">
+  <div class="wrap">
+    <span class="kick" data-r="left">Lo que escuchamos en campo</span>
+    <h2 data-r="left">Voces de <span class="thin">veterinarias</span></h2>
+    <div class="ev">
+      <div class="c" data-r="blur"><p><span class="pend">Frase textual de la visita 1</span></p><b>Veterinaria 1 · sector</b></div>
+      <div class="c" data-r="blur" style="transition-delay:.1s"><p><span class="pend">Frase textual de la visita 2</span></p><b>Veterinaria 2 · sector</b></div>
+      <div class="c" data-r="blur" style="transition-delay:.2s"><p><span class="pend">Frase textual de la visita 3</span></p><b>Veterinaria 3 · sector</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section class="sec" id="equipo">
+  <div class="wrap">
+    <span class="kick" data-r="right" style="text-align:center">PUCE · Emprendimiento Tecnológico</span>
+    <h2 data-r="right" style="text-align:center">Nuestro <span class="thin">equipo</span></h2>
+    <div class="team">
+      <div class="mem" data-r="up"><div class="av"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg></div><div class="inf"><h4>Alejandro Flores</h4><p>Producto y desarrollo</p></div></div>
+      <div class="mem" data-r="up" style="transition-delay:.1s"><div class="av"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg></div><div class="inf"><h4><span class="pend">Compañero 1</span></h4><p>Competencia y mercado</p></div></div>
+      <div class="mem" data-r="up" style="transition-delay:.2s"><div class="av"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg></div><div class="inf"><h4><span class="pend">Compañero 2</span></h4><p>Campo y viabilidad</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="sec" id="contacto" style="background:var(--light)">
+  <div class="wrap cta">
+    <div data-r="left"><span class="kick">Piloto de 4 semanas</span><h2>Tu primer mes <span class="thin">gratis</span></h2>
+      <p style="margin-top:16px">Buscamos veterinarias de Quito para el piloto. Montamos el bot en tu WhatsApp y medimos juntos cuántas consultas resuelve y cuántas citas agenda fuera de horario.</p></div>
+    <form class="lead" id="lead" data-r="blur">
+      <input placeholder="Nombre de la veterinaria" required>
+      <input placeholder="Sector de Quito">
+      <select><option>Plan de interés: Básico</option><option>Pro</option><option>Empresa</option></select>
+      <button class="btn fill" type="submit">Quiero el piloto</button>
+      <p class="ok" id="ok">¡Gracias! (Demo: este formulario todavía no envía datos.)</p>
+    </form>
+  </div>
+</section>
+
+<footer><div class="wrap"><span style="color:#fff;font-weight:800;letter-spacing:.14em">AGENDAVET</span><span>Proyecto de Emprendimiento Tecnológico · PUCE · Quito 2026</span><a href="presentacion/" style="color:var(--tan);font-weight:700">Ver presentación →</a></div></footer>
+<button id="top" aria-label="Volver arriba">↑</button>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+/* preloader */
+window.addEventListener('load',()=>setTimeout(()=>$('#pre').classList.add('out'),450));
+setTimeout(()=>$('#pre').classList.add('out'),3000);
+
+/* header sticky + back to top + active link */
+const secs=$$('section[id]');
+function onScroll(){const y=scrollY;$('#hdr').classList.toggle('stuck',y>60);$('#top').classList.toggle('show',y>600);
+  let cur='';secs.forEach(s=>{if(y+120>=s.offsetTop)cur=s.id});$$('nav.links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur))}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+$('#top').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+$('#burger').onclick=()=>{$('#burger').classList.toggle('x');$('#nav').classList.toggle('open')};
+$$('nav.links a').forEach(a=>a.addEventListener('click',()=>{$('#burger').classList.remove('x');$('#nav').classList.remove('open')}));
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+$$('[data-r]').forEach(el=>io.observe(el));
+
+/* hero slider */
+const caps=[
+ [['Bot 24/7','Responde en segundos'],['Precios y horarios','Configurados por la clínica'],['Plan Básico','$29 al mes']],
+ [['Disponibilidad','Días ocupados en un clic'],['Citas','Solo en horarios libres'],['Confirmación','Automática']],
+ [['Dashboard','Tendencias del negocio'],['Servicios','Los más pedidos'],['Plan Pro','$59 al mes']]];
+const slides=$$('.slide');let si=0,timer;
+function go(n){si=(n+slides.length)%slides.length;slides.forEach((s,k)=>s.classList.toggle('on',k===si));
+  $('#cnum').textContent='0'+(si+1);const cap=$('#cap');cap.classList.remove('anim');
+  $('#capList').innerHTML=caps[si].map(c=>`<li>${c[0]}<small>${c[1]}</small></li>`).join('');
+  void cap.offsetWidth;setTimeout(()=>cap.classList.add('anim'),60);if(si===0)playChat();clearInterval(timer);timer=setInterval(()=>go(si+1),6000)}
+$('#prev').onclick=()=>go(si-1);$('#next').onclick=()=>go(si+1);
+
+/* chat animation */
+const chat=[['in','Hola, ¿cuánto cuesta vacunar a mi perrito?'],['out','¡Hola! 🐶 La vacuna séxtuple cuesta $18. ¿Quieres agendar?'],['in','Sí, mañana en la mañana'],['out','Tengo 9:00, 10:30 u 11:15. ¿Cuál prefieres?'],['in','10:30'],['out','✓ Listo, cita confirmada mañana 10:30. Te recordaré un día antes.']];
+let chatRun=0;
+function playChat(){const run=++chatRun,box=$('#chat');box.innerHTML='';let t=300;
+  chat.forEach(([w,txt])=>{
+    if(w==='out'){setTimeout(()=>{if(run!==chatRun)return;const ty=document.createElement('div');ty.className='m in typing show';ty.innerHTML='<span></span><span></span><span></span>';box.appendChild(ty);setTimeout(()=>ty.remove(),700)},t);t+=750}
+    setTimeout(()=>{if(run!==chatRun)return;const m=document.createElement('div');m.className='m '+w;m.textContent=txt;box.appendChild(m);requestAnimationFrame(()=>m.classList.add('show'))},t);t+=w==='in'?700:900})}
+
+/* hero calendar */
+$('#heroCal').innerHTML=['L','M','M','J','V','S','D'].map(d=>`<div style="font-weight:700;color:#999">${d}</div>`).join('')+
+  Array.from({length:21},(_,i)=>{const n=i+3,b=[5,6,12,18,19].includes(n);return `<div class="d ${b?'busy':'free'}">${n}</div>`}).join('');
+go(0);
+
+/* mouse parallax */
+const para=$('#para');
+if(para)para.parentElement.addEventListener('mousemove',e=>{const r=para.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+  para.querySelectorAll('.ly').forEach(l=>{const d=+l.dataset.d;l.style.transform=`translate(${x*d}px,${y*d}px)`})});
+
+/* calculator */
+function calc(){const s=+$('#iS').value,p=+$('#iP').value,n=+$('#iN').value,g=Math.round(s*p/100)*n;
+  $('#vS').textContent='$'+s;$('#vP').textContent=p+'%';$('#vN').textContent=n;$('#rG').textContent='$'+g.toLocaleString('es-EC')+' / mes';
+  const plan=n===1?['Básico',29]:n<=3?['Pro',59]:['Empresa',149+Math.max(0,n-5)*20];
+  $('#rP').textContent=`Plan sugerido: ${plan[0]} $${plan[1]} → ahorras hasta $${Math.max(0,g-plan[1]).toLocaleString('es-EC')} al mes`}
+['#iS','#iP','#iN'].forEach(s=>$(s).addEventListener('input',calc));calc();
+
+/* tabs */
+const ills=[
+ '<g fill="none" stroke="#c4956a" stroke-width="5"><rect x="60" y="20" width="80" height="160" rx="14"/><path d="M85 60h40M85 80h30M85 100h40"/></g>',
+ '<g fill="none" stroke="#c4956a" stroke-width="5"><path d="M30 50h110v60H70l-25 22v-22H30z"/><path d="M60 140h110v40h-15v18l-20-18H60z" opacity=".5"/></g>',
+ '<g fill="none" stroke="#c4956a" stroke-width="5"><rect x="30" y="40" width="140" height="130"/><path d="M30 75h140M65 25v30M135 25v30"/><path d="M75 120l18 18 35-35"/></g>',
+ '<g fill="none" stroke="#c4956a" stroke-width="5"><path d="M100 30c-30 0-45 25-45 55v35l-15 25h120l-15-25V85c0-30-15-55-45-55z"/><path d="M85 160a15 15 0 0 0 30 0"/></g>'];
+function tab(i){$$('.tab').forEach((t,k)=>t.classList.toggle('on',k===i));$$('.pane').forEach((p,k)=>p.classList.toggle('on',k===i));
+  $('#howNum').textContent='0'+(i+1);const ill=$('#howIll');ill.style.opacity=0;setTimeout(()=>{ill.innerHTML=ills[i];ill.style.opacity=1},200)}
+$$('.tab').forEach((t,i)=>t.onclick=()=>tab(i));tab(0);
+
+/* counters */
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,to=+el.dataset.c,t0=performance.now();
+  (function f(t){const k=Math.min(1,(t-t0)/1600);el.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0);cio.unobserve(el)}),{threshold:.6});
+$$('[data-c]').forEach(el=>cio.observe(el));
+
+/* availability demo */
+let busy=new Set([4,5,11,17,24]);
+try{const s=JSON.parse(localStorage.getItem('av-busy')||'null');if(Array.isArray(s))busy=new Set(s)}catch(e){}
+function drawDays(){const head=['L','M','M','J','V','S','D'].map(d=>`<div class="dn">${d}</div>`).join('');
+  const cells=k=>Array.from({length:28},(_,i)=>{const n=i+1,b=busy.has(n);return k==='o'?`<button class="day ${b?'busy':''}" data-n="${n}">${n}</button>`:`<div class="day ${b?'busy':'free'}">${n}</div>`}).join('');
+  $('#ownerDays').innerHTML=head+cells('o');$('#clientDays').innerHTML=head+cells('c');
+  $$('#ownerDays .day').forEach(d=>d.onclick=()=>{const n=+d.dataset.n;busy.has(n)?busy.delete(n):busy.add(n);try{localStorage.setItem('av-busy',JSON.stringify([...busy]))}catch(e){}drawDays()})}
+drawDays();
+
+/* form demo */
+$('#lead').addEventListener('submit',e=>{e.preventDefault();$('#ok').style.display='block'});
+</script>
+</body>
+</html>
