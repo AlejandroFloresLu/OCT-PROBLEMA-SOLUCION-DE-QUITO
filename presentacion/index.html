@@ -5,84 +5,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AgendaVet · Defensa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Clicker+Script&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --night:#1a110b; --night2:#2b1a0f; --brown:#603809; --gold:#f9c06a; --goldDeep:#e0a54a;
-  --cream:#fff9f1; --cream2:#f6ead8; --ink:#2b1a0f; --muted:#7a6553; --line:#ead9c2; --white:#ffffff;
-}
+:root{--dark:#282828;--darker:#212121;--tan:#c4956a;--tanSoft:#f4ebe2;--light:#f5f5f5;--ink:#212121;--muted:#6b6b6b;--line:#e5e5e5;--white:#fff}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#0e0906;font-family:"Playfair Display",Georgia,serif;color:var(--ink)}
+html,body{height:100%;background:#151515;font-family:Montserrat,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);letter-spacing:-.01em}
 .deck{height:100%;display:flex;align-items:center;justify-content:center}
-.slide{display:none;width:min(100vw,177.78vh);aspect-ratio:16/9;background:var(--cream);position:relative;overflow:hidden;
-  padding:5% 7%;font-size:min(1.85vw,3.3vh);flex-direction:column}
+.slide{display:none;width:min(100vw,177.78vh);aspect-ratio:16/9;background:var(--white);position:relative;overflow:hidden;padding:5% 7%;font-size:min(1.8vw,3.2vh);flex-direction:column}
 .slide.active{display:flex}
-
-/* tipografía */
-.script{font-family:"Clicker Script",cursive;font-weight:400}
-.kicker{font-size:.62em;letter-spacing:.18em;text-transform:uppercase;color:var(--brown);font-weight:700;margin-bottom:.4em}
-h2{font-size:1.75em;line-height:1.12;font-weight:700;margin-bottom:.65em}
-h2 .script{font-size:1.35em;color:var(--brown);line-height:.8}
-h3{font-size:.95em;color:var(--brown);margin-bottom:.3em;font-weight:700}
-p,li{font-size:.8em;line-height:1.5}
+.slide:not(.dark-slide)::after{content:"";position:absolute;left:0;top:0;width:.5%;height:100%;background:var(--tan)}
+.kicker{font-size:.6em;letter-spacing:.12em;text-transform:uppercase;color:var(--tan);font-weight:700;margin-bottom:.5em}
+h2{font-size:1.65em;line-height:1.1;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:.7em}
+.script{font-weight:300}
+h3{font-size:.78em;color:var(--ink);margin-bottom:.4em;font-weight:700;text-transform:uppercase;letter-spacing:-.01em}
+p,li{font-size:.74em;line-height:1.6;color:#3d3d3d}
 ul{padding-left:1.1em}
-.num{position:absolute;right:7%;bottom:3.4%;font-size:.5em;color:var(--muted)}
-
-/* bloques */
-.grid{display:grid;gap:.85em}
-.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
-.card{background:var(--white);border-radius:.7em;padding:.85em 1.05em;box-shadow:0 .25em .9em rgba(96,56,9,.08);border:1px solid var(--line)}
-.card.gold{background:var(--cream2);border-color:#e9cfa6}
-.card.dark{background:var(--night2);color:var(--cream);border-color:var(--night2)}
-.card.dark h3{color:var(--gold)}
-.big{font-size:2em;font-weight:800;color:var(--brown);line-height:1}
-.pill{display:inline-block;background:var(--gold);color:var(--night);border-radius:2em;padding:.35em 1.1em;font-weight:700;font-size:.65em;box-shadow:0 .3em 1em rgba(249,192,106,.35)}
-.band{margin-top:.9em;border-radius:.6em;padding:.75em 1.1em;background:var(--cream2);font-size:.8em;border-left:.3em solid var(--gold)}
-.band.dark{background:var(--night2);color:var(--cream);border-left-color:var(--gold)}
-.pend{background:#ffe2a8;color:#6b3f00;border-radius:.3em;padding:0 .3em;font-weight:700}
-
-/* tablas */
-table{width:100%;border-collapse:separate;border-spacing:0;font-size:.72em;border-radius:.6em;overflow:hidden;box-shadow:0 .25em .9em rgba(96,56,9,.08)}
-th{background:var(--night2);color:var(--gold);text-align:left;padding:.5em .75em;font-weight:700}
-td{padding:.45em .75em;border-bottom:1px solid var(--line);background:var(--white)}
-tr.hl td{background:#fff1d6;font-weight:700}
-
-/* oscuras */
-.dark-slide{background:radial-gradient(ellipse at 78% 55%,#5a3416 0%,#2b1a0f 38%,#140c07 100%);color:var(--cream)}
-.dark-slide h2{color:var(--cream)}
-.dark-slide .kicker{color:var(--gold)}
-.dark-slide p{color:#e9dccb}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:auto}
-.logo{font-family:"Clicker Script",cursive;font-size:1.6em;color:var(--cream)}
-.hero-sub{font-size:1.05em;color:var(--cream)}
-.hero-title{font-family:"Clicker Script",cursive;font-size:5.6em;line-height:.95;color:#fff;margin:.05em 0 .1em -.05em}
-.hero-text{max-width:52%;font-size:.85em;line-height:1.6;color:#e9dccb}
-.paws{position:absolute;right:5%;top:22%;width:38%;opacity:.9}
-
-/* matriz */
+.num{position:absolute;right:7%;bottom:3.4%;font-size:.5em;color:var(--muted);font-weight:700;letter-spacing:.1em}
+.grid{display:grid;gap:.8em}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--white);padding:.9em 1.05em;border:1px solid var(--line)}
+.card.gold{background:var(--light);border-color:var(--light);border-left:.22em solid var(--tan)}
+.card.dark{background:var(--dark);border-color:var(--dark)}
+.card.dark h3,.card.dark b.t{color:var(--tan)!important}.card.dark p,.card.dark li{color:rgba(255,255,255,.75)}
+.big{font-size:1.9em;font-weight:800;color:var(--tan);line-height:1;margin-bottom:.15em}
+.band{margin-top:.9em;padding:.75em 1.1em;background:var(--light);font-size:.74em;border-left:.22em solid var(--tan)}
+.band.dark{background:var(--dark);color:rgba(255,255,255,.8)}
+.band.dark b{color:var(--tan)!important}
+.pend{background:var(--tanSoft);color:#8a5a2b;padding:0 .3em;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.68em}
+th{background:var(--dark);color:#fff;text-align:left;padding:.6em .8em;font-weight:700;text-transform:uppercase;font-size:.85em;letter-spacing:.02em}
+td{padding:.5em .8em;border-bottom:1px solid var(--line);background:#fff;color:#3d3d3d}
+tr.hl td{background:var(--tanSoft);font-weight:700;color:var(--ink)}
 .quad{display:grid;grid-template-columns:auto 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:.55em;flex:1}
-.quad .lab{font-size:.55em;color:var(--muted);font-weight:700;align-self:center;text-align:center;letter-spacing:.08em}
-.quad b.t{display:block;font-size:.8em;margin-bottom:.25em}
-
-/* flujo */
-.flow{display:flex;align-items:stretch;gap:.5em}
-.flow .card{flex:1;text-align:center}
-.flow .arr{align-self:center;color:var(--goldDeep);font-size:1.5em;font-weight:800}
-
-/* planes */
+.quad .lab{font-size:.52em;color:var(--muted);font-weight:700;align-self:center;text-align:center;letter-spacing:.1em}
+.quad b.t{display:block;font-size:.72em;margin-bottom:.35em;text-transform:uppercase}
+.flow{display:flex;align-items:stretch;gap:.5em}.flow .card{flex:1}
+.flow .arr{align-self:center;color:var(--tan);font-size:1.4em;font-weight:800}
 .plan{display:flex;flex-direction:column}
-.plan.feat{background:var(--night2);color:var(--cream);transform:translateY(-.4em);border-color:var(--night2)}
-.plan.feat h3{color:var(--gold)}.plan.feat .price{color:#fff}.plan.feat .who{color:#d9c7b0}
-.price{font-size:1.75em;font-weight:800;color:var(--ink)}
-.price small{font-size:.42em;font-weight:600;opacity:.7}
-.who{color:var(--muted);font-size:.68em;margin-bottom:.45em}
-
-.nav{position:fixed;bottom:10px;left:14px;color:#c9a979;font:12px sans-serif;opacity:.55}
-@media print{
-  @page{size:16in 9in;margin:0}
-  html,body{background:#fff}.deck{display:block}.nav{display:none}
-  .slide{display:flex!important;width:16in;height:9in;font-size:22px;page-break-after:always;aspect-ratio:auto}
-}
+.plan.feat{background:var(--dark);border-color:var(--dark)}
+.plan.feat h3{color:var(--tan)}.plan.feat .price{color:#fff}.plan.feat .who{color:rgba(255,255,255,.55)}.plan.feat li{color:rgba(255,255,255,.8)}
+.price{font-size:1.8em;font-weight:800;color:var(--ink)}.price small{font-size:.4em;font-weight:500;opacity:.6}
+.who{color:var(--muted);font-size:.62em;margin-bottom:.6em;text-transform:uppercase;font-weight:700;letter-spacing:.04em}
+/* oscuras estilo Spectrum */
+.dark-slide{background:var(--dark);color:#fff;padding:0;flex-direction:row}
+.dark-slide::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(196,196,196,.06) 0 1px,transparent 1px 12.5%)}
+.hero-left{width:46%;padding:13% 4% 6% 7%;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:.5em;font-weight:800;letter-spacing:.12em;font-size:.9em;position:absolute;top:8%;left:7%;z-index:2}
+.hero-title{font-size:2.9em;font-weight:800;text-transform:uppercase;line-height:1.02;letter-spacing:-.03em;color:#fff}
+.hero-title .script{font-weight:300}
+.hero-sub{margin-top:.8em;color:var(--tan);font-weight:700;text-transform:uppercase;font-size:.85em;line-height:1.45}
+.btn{display:inline-block;margin-top:1.4em;border:2px solid var(--tan);color:#fff;padding:.75em 1.6em;font-weight:700;text-transform:uppercase;font-size:.55em;letter-spacing:.04em;align-self:flex-start}
+.team{margin-top:1.4em;font-size:.55em;color:rgba(255,255,255,.5)}
+.hero-right{flex:1;position:relative;background:radial-gradient(circle at 60% 40%,#d8b08a 0%,#c4956a 35%,#7a5638 75%,#3a2a1e 100%);display:flex;align-items:center;justify-content:center}
+.hero-right svg{width:58%}
+.stats{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(3,1fr);background:var(--darker)}
+.stats div{padding:.9em 1.1em;border-right:1px solid rgba(255,255,255,.08)}
+.stats b{display:block;color:#fff;font-size:1.1em;font-weight:800}
+.stats span{color:rgba(255,255,255,.55);font-size:.55em;text-transform:uppercase;font-weight:700;letter-spacing:.05em}
+.nav{position:fixed;bottom:10px;left:14px;color:#888;font:12px sans-serif;opacity:.6}
+@media print{@page{size:16in 9in;margin:0}html,body{background:#fff}.deck{display:block}.nav{display:none}
+.slide{display:flex!important;width:16in;height:9in;font-size:21px;page-break-after:always;aspect-ratio:auto}.dark-slide{flex-direction:row}}
 </style>
 </head>
 <body>
@@ -90,15 +71,16 @@ tr.hl td{background:#fff1d6;font-weight:700}
 
 <!-- 1 PORTADA -->
 <section class="slide dark-slide">
-  <div class="topbar"><span class="logo">AgendaVet</span><span class="pill">Emprendimiento Tecnológico · PUCE</span></div>
-  <svg class="paws" viewBox="0 0 200 200" aria-hidden="true">
-    <g fill="#f9c06a" opacity=".16"><ellipse cx="60" cy="150" rx="22" ry="18"/><circle cx="38" cy="120" r="8"/><circle cx="52" cy="108" r="8"/><circle cx="70" cy="108" r="8"/><circle cx="84" cy="120" r="8"/></g>
-    <g fill="#f9c06a" opacity=".32"><ellipse cx="135" cy="95" rx="30" ry="25"/><circle cx="104" cy="54" r="11"/><circle cx="124" cy="38" r="11"/><circle cx="148" cy="38" r="11"/><circle cx="168" cy="54" r="11"/></g>
-  </svg>
-  <p class="hero-sub">Tu veterinaria atendida las 24 horas con</p>
-  <div class="hero-title">AgendaVet</div>
-  <p class="hero-text">Automatización de WhatsApp para clínicas veterinarias pequeñas y medianas de Quito: responde, agenda citas y te muestra cómo va tu negocio.</p>
-  <p style="margin-top:1.2em;font-size:.6em;color:#c9b59c">Equipo: <span class="pend">Nombre 1 · Nombre 2 · Nombre 3</span> · Quito, octubre 2026</p>
+  <div class="brand"><svg viewBox="0 0 40 40" width="1.6em" aria-hidden="true"><polygon points="20,2 37,11 37,29 20,38 3,29 3,11" fill="none" stroke="#fff" stroke-width="2.5"/><g fill="#c4956a"><ellipse cx="20" cy="25" rx="6" ry="5"/><circle cx="12.5" cy="18" r="2.4"/><circle cx="17" cy="14" r="2.4"/><circle cx="23" cy="14" r="2.4"/><circle cx="27.5" cy="18" r="2.4"/></g></svg> AGENDAVET</div>
+  <div class="hero-left">
+    <h1 class="hero-title">Tu veterinaria <span class="script">atiende</span> sola</h1>
+    <p class="hero-sub">WhatsApp automático para clínicas veterinarias de Quito: responde, agenda citas y muestra cómo va el negocio</p>
+    <span class="btn">Emprendimiento Tecnológico · PUCE</span>
+    <p class="team">Equipo: <span class="pend">Nombre 1 · Nombre 2 · Nombre 3</span> · Quito, octubre 2026</p>
+  </div>
+  <div class="hero-right"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="#282828" opacity=".18"><ellipse cx="60" cy="150" rx="22" ry="18"/><circle cx="38" cy="120" r="8"/><circle cx="52" cy="108" r="8"/><circle cx="70" cy="108" r="8"/><circle cx="84" cy="120" r="8"/></g><g fill="#fff" opacity=".85"><ellipse cx="135" cy="95" rx="30" ry="25"/><circle cx="104" cy="54" r="11"/><circle cx="124" cy="38" r="11"/><circle cx="148" cy="38" r="11"/><circle cx="168" cy="54" r="11"/></g></svg>
+    <div class="stats"><div><b>24/7</b><span>Atención por WhatsApp</span></div><div><b>$800 → $29</b><span>Costo mensual</span></div><div><b>33</b><span>Clínicas para sostenernos</span></div></div>
+  </div>
 </section>
 
 <!-- 2 PROBLEMA -->
@@ -135,11 +117,11 @@ tr.hl td{background:#fff1d6;font-weight:700}
   <div class="quad">
     <div></div><div class="lab">BAJO ESFUERZO</div><div class="lab">ALTO ESFUERZO</div>
     <div class="lab">ALTO<br>IMPACTO</div>
-    <div class="card dark"><b class="t" style="color:var(--gold)">Hazlo primero</b><p>• Chatbot de WhatsApp<br>• Automatización de citas y respuestas</p></div>
+    <div class="card dark"><b class="t" style="color:var(--tan)">Hazlo primero</b><p>• Chatbot de WhatsApp<br>• Automatización de citas y respuestas</p></div>
     <div class="card"><b class="t">Planifícalo</b><p>• Aviso automático a los clientes: recordatorios, vacunas, «tu mascota está lista»</p></div>
     <div class="lab">BAJO<br>IMPACTO</div>
     <div class="card gold"><b class="t">Mejoras rápidas</b><p>• Confirmación de citas<br>• Tabla de disponibilidad: una página simple donde el dueño marca los días ocupados y el cliente los ve antes de escribir</p></div>
-    <div class="card"><b class="t" style="color:#9a4b14">Descártalo</b><p>• Hacer una aplicación propia<br>• Llamadas con IA</p></div>
+    <div class="card"><b class="t" style="color:#8a5a2b">Descártalo</b><p>• Hacer una aplicación propia<br>• Llamadas con IA</p></div>
   </div>
   <div class="num">4</div>
 </section>
@@ -155,7 +137,7 @@ tr.hl td{background:#fff1d6;font-weight:700}
     <tr><td><b>Factible</b></td><td>¿La podemos construir?</td><td>API de WhatsApp Business, un modelo de IA y una base de citas: piezas que ya existen</td><td><b>Sí</b></td></tr>
     <tr><td><b>Viable</b></td><td>¿Alguien la paga?</td><td>Desde $29 frente a $800 del costo actual · <span class="pend">N clínicas aceptan el piloto</span></td><td><b>Sí*</b></td></tr>
   </table>
-  <div class="band dark"><b style="color:var(--gold)">Pasa a prototipo.</b> *Viable se confirma con el piloto: la meta es que veterinarias reales acepten pagar.</div>
+  <div class="band dark"><b style="color:var(--tan)">Pasa a prototipo.</b> *Viable se confirma con el piloto: la meta es que veterinarias reales acepten pagar.</div>
   <div class="num">5</div>
 </section>
 
@@ -236,7 +218,7 @@ tr.hl td{background:#fff1d6;font-weight:700}
     <tr><td><b>Mercado</b></td><td>Clínicas veterinarias en Quito</td><td><span class="pend">N clínicas</span> → 33 es el <span class="pend">__ %</span></td></tr>
     <tr><td><b>LTV ÷ CAC</b></td><td>($46 × 0,80 ÷ 4 % de abandono mensual) ÷ $100 por conseguir cada clínica</td><td>≈ 9: sano (meta: más de 3)</td></tr>
   </table>
-  <div class="band dark">Abandono y costo de conseguir clientes son <b style="color:var(--gold)">supuestos</b>: el piloto nos da los números reales.</div>
+  <div class="band dark">Abandono y costo de conseguir clientes son <b style="color:var(--tan)">supuestos</b>: el piloto nos da los números reales.</div>
   <div class="num">10</div>
 </section>
 
@@ -270,11 +252,15 @@ tr.hl td{background:#fff1d6;font-weight:700}
 
 <!-- 13 CIERRE -->
 <section class="slide dark-slide">
-  <div class="topbar"><span class="logo">AgendaVet</span><span class="pill">¿Preguntas?</span></div>
-  <p class="hero-sub">Menos horas en WhatsApp, más</p>
-  <div class="hero-title">citas</div>
-  <p class="hero-text">Desde $29 al mes, una veterinaria de Quito atiende a sus clientes las 24 horas y sabe qué le está funcionando.</p>
-  <div style="margin-bottom:auto"></div>
+  <div class="brand"><svg viewBox="0 0 40 40" width="1.6em" aria-hidden="true"><polygon points="20,2 37,11 37,29 20,38 3,29 3,11" fill="none" stroke="#fff" stroke-width="2.5"/><g fill="#c4956a"><ellipse cx="20" cy="25" rx="6" ry="5"/><circle cx="12.5" cy="18" r="2.4"/><circle cx="17" cy="14" r="2.4"/><circle cx="23" cy="14" r="2.4"/><circle cx="27.5" cy="18" r="2.4"/></g></svg> AGENDAVET</div>
+  <div class="hero-left">
+    <h1 class="hero-title">Menos WhatsApp, <span class="script">más citas</span></h1>
+    <p class="hero-sub">Desde $29 al mes, una veterinaria de Quito atiende las 24 horas y sabe qué le funciona</p>
+    <span class="btn">¿Preguntas?</span>
+  </div>
+  <div class="hero-right"><svg viewBox="0 0 200 200" aria-hidden="true"><g fill="#282828" opacity=".18"><ellipse cx="60" cy="150" rx="22" ry="18"/><circle cx="38" cy="120" r="8"/><circle cx="52" cy="108" r="8"/><circle cx="70" cy="108" r="8"/><circle cx="84" cy="120" r="8"/></g><g fill="#fff" opacity=".85"><ellipse cx="135" cy="95" rx="30" ry="25"/><circle cx="104" cy="54" r="11"/><circle cx="124" cy="38" r="11"/><circle cx="148" cy="38" r="11"/><circle cx="168" cy="54" r="11"/></g></svg>
+    <div class="stats"><div><b>Básico</b><span>$29 / mes</span></div><div><b>Pro</b><span>$59 / mes</span></div><div><b>Empresa</b><span>$149 / mes</span></div></div>
+  </div>
 </section>
 
 </div>
