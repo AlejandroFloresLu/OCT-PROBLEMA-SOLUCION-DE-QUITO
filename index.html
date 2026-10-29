@@ -197,9 +197,10 @@ nav.links a:hover::after,nav.links a.on::after{width:100%}
 /* team */
 .team{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
 .mem{position:relative;overflow:hidden;background:var(--light)}
-.mem .av{height:260px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#ddd,#f5f5f5);transition:.5s;margin:0;grid-template-columns:none}
+.mem .av{height:320px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#ddd,#f5f5f5);transition:.5s;margin:0;grid-template-columns:none}
 .mem:hover .av{transform:scale(1.06)}
 .mem .av svg{width:90px;fill:#bdbdbd}
+.mem .av img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
 .mem .inf{padding:20px 22px;background:#fff;position:relative}
 .mem .inf h4{font-size:16px}
 .mem .inf p{color:var(--tan);font-size:13px;font-weight:500}
@@ -440,9 +441,9 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:2
     <span class="kick" data-r="right" style="text-align:center">PUCE · Emprendimiento Tecnológico</span>
     <h2 data-r="right" style="text-align:center">Nuestro <span class="thin">equipo</span></h2>
     <div class="team">
-      <div class="mem" data-r="up"><div class="av"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg></div><div class="inf"><h4>Alejandro Flores</h4><p>Producto y desarrollo</p></div></div>
-      <div class="mem" data-r="up" style="transition-delay:.1s"><div class="av"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg></div><div class="inf"><h4>Joan Santacruz</h4><p>Competencia y mercado</p></div></div>
-      <div class="mem" data-r="up" style="transition-delay:.2s"><div class="av"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg></div><div class="inf"><h4>Ariel Chacha</h4><p>Campo y viabilidad</p></div></div>
+      <div class="mem" data-r="up"><div class="av"><img src="img/alejandro.jpg" alt="Alejandro Flores" loading="lazy"></div><div class="inf"><h4>Alejandro Flores</h4><p>Producto y desarrollo</p></div></div>
+      <div class="mem" data-r="up" style="transition-delay:.1s"><div class="av"><img src="img/joan.jpg" alt="Joan Santacruz" loading="lazy"></div><div class="inf"><h4>Joan Santacruz</h4><p>Competencia y mercado</p></div></div>
+      <div class="mem" data-r="up" style="transition-delay:.2s"><div class="av"><img src="img/ariel.jpg" alt="Ariel Chacha" loading="lazy"></div><div class="inf"><h4>Ariel Chacha</h4><p>Campo y viabilidad</p></div></div>
     </div>
   </div>
 </section>
