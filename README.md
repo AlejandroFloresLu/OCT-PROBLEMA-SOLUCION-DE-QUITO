@@ -7,4 +7,5 @@ Automatización de WhatsApp para clínicas veterinarias pequeñas y medianas de 
 | `index.html` | Landing page de AgendaVet (GitHub Pages), con efectos al estilo de la plantilla Spectrum. |
 | `presentacion/index.html` | Presentación de defensa. Abrir en el navegador: ← → para avanzar, F pantalla completa, Ctrl+P para PDF. Los recuadros amarillos son datos pendientes. |
 | `docs/FORMATO_9.md` | Transcripción de la matriz y las tres lentes. |
+| `informe/AgendaVet_Informe_Formato9.docx` | Informe de entrega (Word) con carátula, problema, ideas, matriz, tres lentes, competencia, dinero y capturas de la landing. |
 | `datos/` | Competencia (17 empresas, Excel y CSV) y plantillas de mercado y entrevistas. |
